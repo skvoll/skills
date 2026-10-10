@@ -27,6 +27,7 @@ Node.js 22.20 or newer is required by the tested CLI version.
 | Skill     | Use it for                                           | Result                                                             |
 | --------- | ---------------------------------------------------- | ------------------------------------------------------------------ |
 | `pact`    | Adding shared rules to a project                     | The No Side Effects Policy and other bundled rules in `AGENTS.md`. |
+| `onboard` | Learning an unfamiliar repo as a future maintainer   | A source-backed lesson on architecture, patterns, and making changes. |
 | `task`    | Implementing a feature, fix, or documentation change | A locally validated change.                                        |
 | `refine`  | A requested final pass on an existing implementation | A corrected and simplified local change.                           |
 | `deliver` | Explicitly requested delivery of prepared work       | Commit, push, PR checks/review, and merge when permitted.          |
@@ -35,6 +36,12 @@ Invoke skills with your agent's syntax, such as `$task` in Codex or `/task` in
 Claude Code. Delivery must be explicitly invoked; reading or editing its skill
 does not authorize Git or remote changes. Active repository instructions and
 permissions still apply.
+
+Use `$onboard` (or `/onboard`) for a fast maintainer briefing, or focus it with
+`$onboard the authentication subsystem`. It traces real behavior, explains the
+project's patterns and tradeoffs, and walks through a hypothetical change with
+source links and validation guidance. It teaches in the conversation and leaves
+the repository unchanged unless you request an onboarding document.
 
 Each directory under `skills/` is self-contained. Installation copies skill
 content and creates agent links (or copies with `--copy`). It does not install
@@ -52,11 +59,11 @@ Manage project installations with:
 ```sh
 npx skills list
 npx skills update
-npx skills remove pact task refine deliver
+npx skills remove pact onboard task refine deliver
 ```
 
 For global installations, use `npx skills list --global`,
-`npx skills update --global`, and `npx skills remove --global pact task refine deliver`.
+`npx skills update --global`, and `npx skills remove --global pact onboard task refine deliver`.
 See the [CLI documentation](https://github.com/vercel-labs/skills) for other agents
 and options.
 

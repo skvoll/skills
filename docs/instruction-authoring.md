@@ -67,7 +67,9 @@ The current shared skills use the portable frontmatter fields and prose gates;
 these are behavioral instructions, not a sandbox or enforced permission system.
 
 `pact` adds or refreshes bundled rules in a project's `AGENTS.md`; installing it
-alone does not apply those rules. `task` handles implementation. `refine` handles
+alone does not apply those rules. `onboard` teaches repository architecture and
+maintenance through source-backed examples without implementing changes.
+`task` handles implementation. `refine` handles
 an explicitly requested final pass over existing work. `deliver` handles explicitly requested delivery and
 defines its authorized mutations. Neither implementation nor refinement should
 automatically start delivery. Mentioning a skill in a review, editing its file,
@@ -99,6 +101,10 @@ or asking how it works does not activate that workflow.
 | Run pact again, then update its bundled rules and rerun                    | An unchanged block stays unchanged; updated rules replace that block only. |
 | Pact finds conflicting custom rules or incomplete markers                  | Report the conflict before overwriting; do not add a duplicate block.      |
 | "Use task to fix this bug" with an unrelated dirty file                    | Investigate, implement, and validate locally; preserve the unrelated file. |
+| "Onboard me to this repo quickly"                                         | Trace central behavior and patterns with source links, then explain a hypothetical change and its checks. |
+| "Onboard me to this monorepo's authentication package"                     | Map shared boundaries, focus on that package, and state unexplored areas. |
+| Onboarding a Markdown collection with stale docs and no test suite        | Trace artifact consumption, explain source/doc discrepancies, and use the actual validation boundary. |
+| Onboarding reveals an awkward design or missing dependencies             | Explain the consequence without refactoring, installing, or invoking delivery. |
 | "Explain how deliver works" or "Rewrite all skills"                        | Read or edit the skill; do not stage, commit, push, or open a PR.          |
 | "Use refine on this change"                                                | Improve the prepared change locally; report if no prepared change exists.  |
 | "Use deliver" in this repository with a prepared change                    | Commit and push through the applicable PR workflow; no package bump.       |
@@ -156,3 +162,17 @@ Record the date, relevant source, compatibility impact, and resulting decision
 when a recheck changes guidance. If sources are inaccessible, record what remains
 unverified; do not label remembered advice as the latest standard. Rechecking
 does not authorize dependency upgrades, installation, or remote changes.
+
+### Onboarding design sources
+
+Reviewed on **2026-10-10**:
+[Matt Pocock's architecture workflow](https://github.com/mattpocock/skills/blob/main/skills/engineering/improve-codebase-architecture/SKILL.md)
+and AI Hero's [codebase-design](https://www.aihero.dev/skills-codebase-design)
+and [domain-modeling](https://www.aihero.dev/skills-domain-modeling) explanations.
+`onboard` adapts their attention to maintenance hotspots, complexity hidden by
+interfaces, and project vocabulary into a teaching workflow. It explains the
+existing design and its tradeoffs with source evidence. It does not require
+Matt's other skills, vocabulary substitutions, parallel agents, HTML reports,
+or glossary/ADR writes. Portable frontmatter follows the
+[Agent Skills specification](https://agentskills.io/specification), rechecked
+on the same date; no host-specific invocation metadata is needed.
