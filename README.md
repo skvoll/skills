@@ -29,6 +29,7 @@ Node.js 22.20 or newer is required by the tested CLI version.
 | `pact`    | Adding shared rules to a project                     | The No Side Effects Policy and other bundled rules in `AGENTS.md`. |
 | `task`    | Implementing a feature, fix, or documentation change | A locally validated change.                                        |
 | `refine`  | A requested final pass on an existing implementation | A corrected and simplified local change.                           |
+| `deliver` | Explicitly requested delivery of prepared work       | Commit, push, PR checks/review, and merge when permitted.          |
 
 Invoke skills with your agent's syntax, such as `$task` in Codex or `/task` in
 Claude Code. Delivery must be explicitly invoked; reading or editing its skill
@@ -51,11 +52,11 @@ Manage project installations with:
 ```sh
 npx skills list
 npx skills update
-npx skills remove pact task refine
+npx skills remove pact task refine deliver
 ```
 
 For global installations, use `npx skills list --global`,
-`npx skills update --global`, and `npx skills remove --global pact task refine`.
+`npx skills update --global`, and `npx skills remove --global pact task refine deliver`.
 See the [CLI documentation](https://github.com/vercel-labs/skills) for other agents
 and options.
 
