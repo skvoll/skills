@@ -19,7 +19,7 @@ npx skills add skvoll/skills --skill '*' --agent codex claude-code --yes
 ```
 
 Add `--global` to make them available across projects. Preview the collection
-with `npx skills add skvoll/skills --list`, or select one with `--skill pact`.
+with `npx skills add skvoll/skills --list`, or select one with `--skill task`.
 Node.js 22.20 or newer is required by the tested CLI version.
 
 ## Workflows
@@ -27,8 +27,9 @@ Node.js 22.20 or newer is required by the tested CLI version.
 | Skill     | Use it for                                           | Result                                                             |
 | --------- | ---------------------------------------------------- | ------------------------------------------------------------------ |
 | `pact`    | Adding shared rules to a project                     | The No Side Effects Policy and other bundled rules in `AGENTS.md`. |
+| `task`    | Implementing a feature, fix, or documentation change | A locally validated change.                                        |
 
-Invoke skills with your agent's syntax, such as `$pact` in Codex or `/pact` in
+Invoke skills with your agent's syntax, such as `$task` in Codex or `/task` in
 Claude Code. Delivery must be explicitly invoked; reading or editing its skill
 does not authorize Git or remote changes. Active repository instructions and
 permissions still apply.
@@ -49,11 +50,11 @@ Manage project installations with:
 ```sh
 npx skills list
 npx skills update
-npx skills remove pact
+npx skills remove pact task
 ```
 
 For global installations, use `npx skills list --global`,
-`npx skills update --global`, and `npx skills remove --global pact`.
+`npx skills update --global`, and `npx skills remove --global pact task`.
 See the [CLI documentation](https://github.com/vercel-labs/skills) for other agents
 and options.
 
