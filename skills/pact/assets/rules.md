@@ -29,3 +29,36 @@ Explicit invocation of a workflow skill authorizes only the actions described
 by that workflow, subject to active instructions and environment restrictions.
 Reading, editing, reviewing, or mentioning a skill does not invoke it. `task`
 and `refine` cover local work; `deliver` defines the delivery boundary.
+
+## Evolutionary Software Architecture
+
+Build only what is needed today, but structure it so that tomorrow's changes
+remain local, understandable, and inexpensive. Use these principles as
+guidelines for engineering judgment; no particular architecture, methodology,
+or design pattern is required.
+
+- **Locality of change:** Prefer clear module boundaries and encapsulated
+  responsibilities so changes stay as local as reasonably possible. Avoid
+  unnecessary changes propagating across unrelated components.
+- **Low coupling, high cohesion:** Keep related functionality together and
+  minimize dependencies between independent components. Avoid tying business
+  logic to implementation details; introduce explicit boundaries where they
+  provide practical value.
+- **Progressive abstraction:** Start with simple concrete implementations.
+  Introduce abstractions when actual requirements justify them; avoid
+  speculative generalization and premature extensibility. Modularity does not
+  depend on the number of interfaces or abstraction layers.
+- **Minimal viable architecture:** Implement only current requirements with
+  the simplest maintainable design that allows reasonable evolution. Minimize
+  boilerplate, indirection, and infrastructure; do not optimize for hypothetical
+  requirements or add abstractions for theoretical purity. Simplicity and
+  maintainability support each other.
+- **Continuous architectural integrity:** Keep new features consistent with
+  existing architectural decisions and reuse established patterns when
+  appropriate. Justify competing approaches and reevaluate existing boundaries
+  as requirements evolve.
+- **Refactoring over workarounds:** Treat refactoring as a normal part of
+  evolution. Prefer small, controlled refactoring over accumulated workarounds
+  or preserving unsuitable structures merely to avoid changing existing code.
+  Keep it proportional to the task; avoid unrelated rewrites or broad
+  restructuring.
