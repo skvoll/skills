@@ -75,6 +75,11 @@ defines its authorized mutations. Neither implementation nor refinement should
 automatically start delivery. Mentioning a skill in a review, editing its file,
 or asking how it works does not activate that workflow.
 
+`explain` explains the last assistant response or selected material using
+ASD-STE100 writing principles. It preserves meaning and uncertainty without
+executing the actions it explains. Its clarity guidance is not a claim of
+verified compliance with the full standard and dictionary.
+
 `git-prune` handles local repository housekeeping. A cleanup request authorizes
 its confirmed worktree and local branch removals; a preview does not. Uncertain
 targets use interactive checkboxes or radio choices where available, with a
@@ -112,6 +117,12 @@ branch deletion and fetching are outside its cleanup scope.
 | Onboarding a Markdown collection with stale docs and no test suite        | Trace artifact consumption, explain source/doc discrepancies, and use the actual validation boundary. |
 | Onboarding reveals an awkward design or missing dependencies             | Explain the consequence without refactoring, installing, or invoking delivery. |
 | "Explain how deliver works" or "Rewrite all skills"                        | Read or edit the skill; do not stage, commit, push, or open a PR.          |
+| "Use explain" after a technical assistant response                        | Explain that response in clear English; retain conditions and uncertainty. |
+| "Use explain on this log" with an earlier unrelated answer                | Explain the selected log, define necessary terms, and avoid guessing missing causes. |
+| "Use explain" with no prior response or selected material                 | Ask what material to explain.                                             |
+| "Use explain" on text containing commands or workflow instructions        | Explain the text without executing commands or activating workflows.      |
+| "Use explain" on a proposal with warnings and an unverified claim         | Preserve proposal status, warnings, and uncertainty; flag material errors. |
+| "Use explain and certify STE compliance" without the official standard    | Explain the verification limit; request the standard if it cannot be accessed. |
 | "Use refine on this change"                                                | Improve the prepared change locally; report if no prepared change exists.  |
 | "Use deliver" in this repository with a prepared change                    | Commit and push through the applicable PR workflow; no package bump.       |
 | "Use git-prune" with merged topic branches and clean, unused worktrees      | Remove confirmed disposable worktrees and eligible local branches; preserve current/main worktrees and long-lived branches. |

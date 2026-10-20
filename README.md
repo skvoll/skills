@@ -28,6 +28,7 @@ Node.js 22.20 or newer is required by the tested CLI version.
 | --------- | ---------------------------------------------------- | ------------------------------------------------------------------ |
 | `pact`    | Adding shared rules to a project                     | The No Side Effects Policy and other bundled rules in `AGENTS.md`. |
 | `onboard` | Learning an unfamiliar repo as a future maintainer   | A source-backed lesson on architecture, patterns, and making changes. |
+| `explain` | Understanding the last response or selected context | A clear explanation using ASD-STE100 writing principles.            |
 | `task`    | Implementing a feature, fix, or documentation change | A locally validated change.                                        |
 | `refine`  | A requested final pass on an existing implementation | A corrected and simplified local change.                           |
 | `deliver` | Explicitly requested delivery of prepared work       | Commit, push, PR checks/review, and merge when permitted.          |
@@ -43,6 +44,12 @@ Use `$onboard` (or `/onboard`) for a fast maintainer briefing, or focus it with
 project's patterns and tradeoffs, and walks through a hypothetical change with
 source links and validation guidance. It teaches in the conversation and leaves
 the repository unchanged unless you request an onboarding document.
+
+Use `$explain` (or `/explain`) to explain the last assistant response in clear
+English. Select a target with `$explain this error: ...` or `$explain the code
+above`. It applies [ASD-STE100](https://www.asd-ste100.org/) writing principles
+while preserving technical details and uncertainty; it does not certify STE
+compliance or perform the actions it explains.
 
 Use `$git-prune` (or `/git-prune`) to clean up the current repository's outdated
 local branches and linked worktrees. It preserves active work and protected
@@ -67,11 +74,11 @@ Manage project installations with:
 ```sh
 npx skills list
 npx skills update
-npx skills remove pact onboard task refine deliver git-prune
+npx skills remove pact onboard explain task refine deliver git-prune
 ```
 
 For global installations, use `npx skills list --global`,
-`npx skills update --global`, and `npx skills remove --global pact onboard task refine deliver git-prune`.
+`npx skills update --global`, and `npx skills remove --global pact onboard explain task refine deliver git-prune`.
 See the [CLI documentation](https://github.com/vercel-labs/skills) for other agents
 and options.
 
