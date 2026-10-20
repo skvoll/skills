@@ -75,6 +75,12 @@ defines its authorized mutations. Neither implementation nor refinement should
 automatically start delivery. Mentioning a skill in a review, editing its file,
 or asking how it works does not activate that workflow.
 
+`git-prune` handles local repository housekeeping. A cleanup request authorizes
+its confirmed worktree and local branch removals; a preview does not. Uncertain
+targets use interactive checkboxes or radio choices where available, with a
+numbered text fallback. Force deletion requires specific authorization. Remote
+branch deletion and fetching are outside its cleanup scope.
+
 ## Validate a change
 
 1. Check frontmatter, directory/name agreement, relative links, and the absence
@@ -108,6 +114,14 @@ or asking how it works does not activate that workflow.
 | "Explain how deliver works" or "Rewrite all skills"                        | Read or edit the skill; do not stage, commit, push, or open a PR.          |
 | "Use refine on this change"                                                | Improve the prepared change locally; report if no prepared change exists.  |
 | "Use deliver" in this repository with a prepared change                    | Commit and push through the applicable PR workflow; no package bump.       |
+| "Use git-prune" with merged topic branches and clean, unused worktrees      | Remove confirmed disposable worktrees and eligible local branches; preserve current/main worktrees and long-lived branches. |
+| Cleanup finds dirty worktrees, ignored files, detached HEADs, or missing paths | Present uncertain targets in interactive choices; keep unselected items and never infer force authorization. |
+| A topic branch tracks its own published tip but is unmerged into the integration base | Keep or ask even if `git branch -d` would accept deletion. |
+| A merged topic branch is the local upstream of a retained branch            | Keep the upstream branch and preserve tracking configuration. |
+| Detached worktree history is retained only by another proposed deletion    | Ask before removing its worktree or registration; preservation must survive the whole plan. |
+| The user selects "Remove worktree only" for a merged branch                 | Remove the worktree and retain the branch despite automatic deletion eligibility. |
+| A worktree prune preview includes both approved and retained registrations | Leave the repository-wide prune batch alone; report the limitation. |
+| "Use git-prune preview", or a branch tip changes after inspection          | Preview makes no mutations; changed targets are reclassified before acting. |
 | A new push after green checks, or CI still pending                         | Reassess the current head and wait; do not claim a verified merge.         |
 | Required human review, missing credentials, or a broad redesign needed     | State the specific dependency; do not bypass it or expand scope.           |
 | A request relies on changed host features and current docs are unavailable | State the unverified assumption and use supported local evidence.          |
@@ -176,3 +190,21 @@ Matt's other skills, vocabulary substitutions, parallel agents, HTML reports,
 or glossary/ADR writes. Portable frontmatter follows the
 [Agent Skills specification](https://agentskills.io/specification), rechecked
 on the same date; no host-specific invocation metadata is needed.
+
+### Git cleanup design sources
+
+Reviewed on **2026-10-20** against Git **2.50.1** and the current
+[worktree](https://git-scm.com/docs/git-worktree),
+[branch](https://git-scm.com/docs/git-branch), and
+[status](https://git-scm.com/docs/git-status) manuals. `git-prune` uses existing
+porcelain inventory, ordinary worktree removal, branch deletion, and worktree
+prune dry runs; it does not require newer branch cleanup options. Independent
+integration evidence is required because branch deletion's merge check uses
+upstream or HEAD. Ignored files and repository-wide metadata pruning require
+separate inspection. Review also confirmed `--no-optional-locks` for status
+inspection and local upstream dependencies through `git for-each-ref`'s
+[`upstream` field](https://git-scm.com/docs/git-for-each-ref). Worktree history
+must remain reachable after all proposed removals, including registration
+pruning. The portable [Agent Skills format](https://agentskills.io/specification)
+was also rechecked;
+the new skill needs no host-specific metadata or UI dependency.
