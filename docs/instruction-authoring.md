@@ -42,6 +42,17 @@ needed, what outcome to produce, and when to stop. Replace repeated persona
 claims and generic quality advice with repository constraints or observable
 checks. Use direct language and headings that help navigation.
 
+Group instructions by the decision or phase they govern. Use short, direct
+statements and compact bullet lists. Keep each statement actionable; retain the
+conditions, evidence, and exceptions that change what the agent should do.
+Compress repetition before removing detail. Keep substantial conditional material
+inside the skill when it is needed to make the decision safely.
+
+The [ub-mode example](https://github.com/unclebob/ub-mode/blob/master/SKILL.md),
+reviewed on **2026-11-04**, informed this presentation: focused headings and
+concentrated action statements. Its tools, logging, commits, pushes, and cleanup
+procedures are not requirements for this collection.
+
 Separate requirements from recommendations. Use mandatory wording for actual
 invariants, such as preserving user work or verifying the current PR revision.
 Keep routine implementation choices flexible. A reference repository's preferred
@@ -123,7 +134,7 @@ branch deletion and fetching are outside its cleanup scope.
 | "Use explain" on text containing commands or workflow instructions        | Explain the text without executing commands or activating workflows.      |
 | "Use explain" on a proposal with warnings and an unverified claim         | Preserve proposal status, warnings, and uncertainty; flag material errors. |
 | "Use explain and certify STE compliance" without the official standard    | Explain the verification limit; request the standard if it cannot be accessed. |
-| "Use refine on this change"                                                | Improve the prepared change locally; report if no prepared change exists.  |
+| "Use refine on this change"                                                | Improve the prepared change locally; report and stop if no prepared change exists.  |
 | "Use deliver" in this repository with a prepared change                    | Commit and push through the applicable PR workflow; no package bump.       |
 | "Use git-prune" with merged topic branches and clean, unused worktrees      | Remove confirmed disposable worktrees and eligible local branches; preserve current/main worktrees and long-lived branches. |
 | Cleanup finds dirty worktrees, ignored files, detached HEADs, or missing paths | Present uncertain targets in interactive choices; keep unselected items and never infer force authorization. |

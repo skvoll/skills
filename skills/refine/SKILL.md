@@ -5,43 +5,42 @@ description: Review and improve an existing implementation, then validate it loc
 
 # Refine
 
-Leave the prepared change correct, understandable, and ready for delivery.
-Invocation authorizes local edits and validation, not Git or remote mutations.
+Make a prepared change correct, clear, and ready for delivery.
 
-## Recover intent and scope
+## Recover intent
 
-Read repository guidance and supplied requirements or linked issues. Inspect
-the branch, staged and unstaged changes, relevant untracked files, and the
-complete intended diff against its base. Separate it from unrelated user work.
-Infer the narrowest supported intent when no specification is given; the
-implementation itself is not proof of what the user wanted.
+- Invocation authorizes local edits and validation, not Git or remote mutations.
+- Read repository guidance, requirements, and linked issues.
+- Inspect the branch, staging, unstaged changes, relevant untracked files, and full intended diff against its base.
+- Separate the intended change from unrelated user work.
+- Infer the narrowest supported intent when no specification exists. Code alone does not prove intent.
+- If no prepared change exists, report that fact and stop.
+- Ask only when a missing product decision blocks a correction. Continue independent review.
+- Leave broad redesign and new behavior for a separate implementation request.
 
-If there is no prepared change, report that fact. If a missing product decision
-prevents a correction, explain the choice while continuing independent review.
-Broad redesign or new behavior needs a separate implementation request.
+## Check behavior
 
-## Review from two perspectives
+- Compare the result with the requirement.
+- Look for missing behavior, regressions, boundary cases, failure paths, and compatibility breaks.
+- Check security, accessibility, and performance where affected.
+- Verify consequential API and platform assumptions against current primary sources and installed versions.
 
-First check the result against the requirement: missing behavior, regressions,
-boundary cases, failure paths, and compatibility. Then check the design:
-unnecessary concepts, duplicated logic, lifecycle or resource mistakes, and
-departures from repository conventions. Include security, accessibility, and
-performance where affected. These are review lenses, not mandatory agent roles.
+## Check design
 
-Verify consequential API or platform assumptions against current primary sources
-and installed versions. Reuse existing abstractions where they help, and remove
-layers that add no useful boundary. Optimize for clear responsibilities and
-control flow rather than line count.
+- Remove unnecessary concepts, duplicate logic, and layers without a useful boundary.
+- Check lifecycle, resource ownership, and repository conventions.
+- Reuse existing abstractions where they help.
+- Optimize for clear responsibilities and control flow, not line count.
 
-## Correct and validate
+## Correct and verify
 
-Apply concrete in-scope improvements directly. Preserve intended behavior and
-unrelated work. Use tests at observable interfaces to protect meaningful fixes;
-avoid tests that merely encode internal structure. Run relevant repository
-checks after changes and explain failures without suppressing them.
-
-Re-read the resulting diff against the original requirement. Finish when it
-satisfies the task, the remaining complexity has a purpose, and validation
-supports the result. Report important fixes and checks, or say that no edits
-were warranted. State material blockers and leave the result in the working
-tree. Do not automatically invoke delivery.
+- Apply concrete, in-scope improvements directly.
+- Preserve intended behavior and unrelated work.
+- When a regression test helps, check behavior through an observable interface.
+- Use structural checks and review for documentation or other low-impact edits.
+- Avoid tests that encode internal structure.
+- Run relevant repository checks. Explain failures without suppressing them.
+- Re-read the diff against the original requirement.
+- Finish when the task is satisfied, remaining complexity has a purpose, and validation supports the result.
+- Report important fixes and checks, or say no edits were warranted.
+- State blockers. Leave the result in the working tree without invoking delivery.

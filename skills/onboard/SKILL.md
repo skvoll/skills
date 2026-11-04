@@ -5,102 +5,84 @@ description: Teach a future maintainer how the current repository works through 
 
 # Onboard
 
-Give the user a working mental model they can use to predict behavior, locate a
-change, and verify it. Optimize for time to understanding: explain the few
-mechanisms that unlock the repository, then deepen them with concrete examples.
-README and directory summaries are orientation, not the finished lesson.
+Teach a mental model the user can use to predict behavior, locate changes, and verify them.
 
-This is an explanation workflow. Inspect files and Git without changing them;
-do not implement recommendations, install dependencies, or invoke other workflows.
-Write an onboarding document only if requested. Respect active instructions and
-existing work; inspect commands before any optional local execution.
+## Scope
 
-## Find the learning spine
+- Inspect files and Git without changing them.
+- Do not implement recommendations, install dependencies, or invoke other workflows.
+- Write an onboarding document only when requested.
+- Respect active instructions and existing work. Inspect commands before optional local execution.
+## Set the audience
 
-Use the current repository unless the user names another target. Read applicable
-instructions, inspect status, and establish the repository's purpose from its
-entrypoints, manifests, public interfaces, and representative tests. Use docs,
-glossaries, and architecture decisions as leads, then check them against source.
-Distinguish committed design from current working-tree changes.
+- Use the current repository unless another target is named.
+- Honor the user's subsystem, time budget, and experience level.
+- Otherwise assume a competent developer new to the project; aim for a five-minute first briefing.
+- Resolve discoverable facts yourself. Avoid a generic interview.
 
-Honor a named subsystem, time budget, or experience level. Otherwise assume a
-competent developer new to this project and aim for a first briefing readable in
-about five minutes. Resolve discoverable facts yourself; do not delay the lesson
-with a generic interview.
+## Find the central path
 
-Identify the core behavior and the concepts it depends on. Sample recent history
-to find active maintenance areas, but keep the central path in view even if it
-changes rarely. In a monorepo, map shared boundaries briefly and trace a relevant
-package; state the scope instead of pretending to cover every package.
+- Read repository instructions and inspect status.
+- Establish purpose from entrypoints, manifests, public interfaces, and representative tests.
+- Treat docs, glossaries, and architecture decisions as leads; verify them against source.
+- Distinguish committed design from working-tree changes.
+- Identify the core behavior and the concepts needed to understand it.
+- Sample recent history for maintenance hotspots without losing rarely changed central behavior.
+- In a monorepo, map shared boundaries and trace a relevant package. State the scope.
+## Bound exploration
 
-Search selectively and follow references, callers, and tests. Skip generated,
-vendored, and dependency trees unless they explain a relevant boundary. Stop
-widening exploration when you can support the core path, recurring patterns,
-and a realistic maintenance example. Name important gaps rather than reading
-every file or hiding uncertainty.
+- Follow references, callers, and tests selectively.
+- Skip generated, vendored, and dependency trees unless they explain a relevant boundary.
+- Stop expanding once evidence supports the core path, recurring patterns, and a maintenance example.
+- Name important gaps rather than hiding uncertainty or reading every file.
 
-## Reconstruct how it works
+## Trace behavior
 
-Trace a representative behavior from its actual entrypoint through decisions,
-state or data transformations, dependencies, and observable output. Follow a
-consequential failure or alternate path too: where is it detected, what state
-survives, and what does the caller observe? Cite actual symbols and source
-locations at the transitions. For a library, trace a public call; for a CLI, a
-command; for a declarative or documentation repository, trace how source becomes
-a consumed artifact. Do not invent an application runtime.
+- Follow one representative behavior from its actual entrypoint to observable output.
+- Show decisions, state changes, data transformations, and dependencies.
+- Trace a consequential failure or alternate path: detection, surviving state, and caller-visible result.
+- Anchor transitions to real symbols and source locations.
+- For a library, trace a public call; for a CLI, a command.
+- For declarative or documentation projects, trace source to the consumed artifact. Do not invent a runtime.
 
-Explain the architectural boundaries: who owns which state or responsibility,
-which direction dependencies flow, and what callers must know. Show where an
-interface hides complexity and where maintainers must coordinate across files.
-Explain abstractions in the repository's own vocabulary before giving them a
-generic design-pattern label.
+## Explain the design
 
-Extract the patterns that actually recur. For each consequential pattern, show
-representative source examples, the problem it solves, its cost, and how to
-extend it. Distinguish a repeated convention from a one-off implementation;
-include an exception when it changes how a maintainer should work. Ground design
-intent in decisions, history, or comments where available. Otherwise label the
-rationale as an inference and explain what evidence supports it.
+- Identify responsibility and state ownership, dependency direction, and caller obligations.
+- Show where interfaces hide complexity and where changes require coordination.
+- Use project vocabulary before generic pattern labels.
+- For each consequential recurring pattern, show examples, purpose, cost, and extension points.
+- Separate repeated conventions from one-off choices. Include exceptions that affect maintenance.
+- Ground intent in decisions, history, or comments. Label inferred rationale and its evidence.
+- Identify invariants and the code or checks that enforce them.
+- Where relevant, cover precedence, ordering, lifecycle, compatibility, and external boundaries.
+- Connect each risk to a concrete trigger and consequence.
 
-Surface the invariants a future change could break, with the code or checks that
-enforce them. Where relevant, include configuration precedence, ordering,
-lifecycles, compatibility, and boundaries around external dependencies. Connect
-risks to a concrete trigger and consequence; avoid a generic audit checklist.
+## Walk through a change
 
-## Teach through a maintenance example
+- Choose a small hypothetical change tied to the user's goal or a common extension point.
+- Show where it starts, which example to follow, and which contracts and files it touches.
+- Explain a plausible naive mistake and its consequence.
+- Describe the expected result and verification through existing interfaces. Do not make the edit.
+- Recover development commands from configuration, CI, and docs.
+- Distinguish executed checks from inspected commands; state coverage and limits.
+- If automated tests are absent, explain the actual validation boundary.
+- Do not require project bootstrapping or live-service access for the lesson.
 
-Choose a small hypothetical change aligned with the user's goal or a common
-extension point. Walk through where it starts, which existing example to copy,
-which contracts and dependent files it touches, and what would go wrong with a
-plausible naive approach. Explain the expected outcome and how a maintainer
-would verify it through the project's existing interfaces. Do not make the edit.
+## Teach in layers
 
-Recover development and validation commands from project configuration, CI, and
-development docs. Distinguish checks you ran from commands merely inspected, and
-describe each check's coverage and limits. If the repository has no automated
-tests, state its actual validation boundary. Onboarding should not require
-bootstrapping the project or contacting live services.
+- Lead with purpose and a compact mental model. A directory summary alone is not a lesson.
+- Use a small diagram when it clarifies ownership, dependencies, or flow.
+- Explain the traced behavior, decisive patterns, tradeoffs, and maintenance example.
+- Keep the first briefing focused. Link deeper details instead of dumping files.
+- Anchor consequential architectural claims to source; use clickable line links where supported.
+- Separate observations, inferred intent, unknowns, and stale-document discrepancies.
+- Explain what each mechanism means for the user's next decision.
+## Finish the lesson
 
-## Deliver a layered lesson
+- Give a prioritized reading path, maintenance traps, and an optional prediction or change-location exercise.
+- Do not gate the briefing on exercise answers.
+- Offer specific follow-up topics; deepen them on request using gathered evidence.
+- Report scope and material unknowns. Avoid claims of exhaustive coverage or unsolicited redesign.
 
-Lead with the repository's purpose and a compact mental model of its behavior.
-Use a small diagram when it makes ownership, dependencies, or flow clearer.
-Then teach the traced behavior, decisive patterns and tradeoffs, and the
-maintenance example. Keep the first briefing focused; attach source pointers
-and deeper explanations where the user can follow them without a file dump.
-
-Use clickable file links with line numbers where supported. Every consequential
-architectural claim needs a source anchor; distinguish observations, inferred
-intent, and unknowns. Treat stale docs as a discrepancy to explain. Teach what
-each mechanism means for the user's next decision, not just what files contain.
-
-Finish with a prioritized reading path explaining what each stop teaches, the
-main maintenance traps, and a small prediction or change-location exercise the
-user can try. Make the exercise optional; do not gate the briefing on answers.
-Offer specific follow-up topics drawn from gaps or complex boundaries. Deepen
-those on request using the evidence already gathered.
-
-The lesson is complete when the user can explain the central behavior, recognize
-the key conventions and their limits, locate a plausible change, and identify
-how to check it. Report exploration scope and material unknowns; do not claim
-exhaustive coverage or turn the lesson into an unsolicited redesign.
+Done means the user can explain central behavior, recognize conventions and their
+limits, locate a plausible change, and identify how to check it.
