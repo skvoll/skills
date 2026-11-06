@@ -1,100 +1,54 @@
 # skvoll/skills
 
-Portable workflows for AI coding agents, installed with the
-[Vercel Skills CLI](https://github.com/vercel-labs/skills).
+Portable agent workflows, installed with the [Vercel Skills CLI](https://github.com/vercel-labs/skills).
 
 ## Install
 
-Run this in the project where you want the skills:
+Use Node.js 22.20 or newer. In the target project:
 
 ```sh
 npx skills add skvoll/skills
 ```
 
-The CLI lets you choose skills and agents. To install all skills for
-Codex and Claude Code without prompts:
+To install every skill for Codex and Claude Code without prompts:
 
 ```sh
 npx skills add skvoll/skills --skill '*' --agent codex claude-code --yes
 ```
 
-Add `--global` to make them available across projects. Preview the collection
-with `npx skills add skvoll/skills --list`, or select one with `--skill task`.
-Node.js 22.20 or newer is required by the tested CLI version.
+Add `--global` for user-wide installation. Preview with `--list`; select with
+`--skill <name>`. Installation copies skill directories and creates agent links
+(or copies with `--copy`), not global instructions, MCP servers, or configuration.
 
-## Workflows
+## Use
 
-| Skill     | Use it for                                           | Result                                                             |
-| --------- | ---------------------------------------------------- | ------------------------------------------------------------------ |
-| `pact`    | Adding shared rules to a project                     | The No Side Effects Policy and other bundled rules in `AGENTS.md`. |
-| `onboard` | Learning an unfamiliar repo as a future maintainer   | A source-backed lesson on architecture, patterns, and making changes. |
-| `explain` | Understanding the last response or selected context | A clear explanation using ASD-STE100 writing principles.            |
-| `task`    | Implementing a feature, fix, or documentation change | A locally validated change.                                        |
-| `refine`  | A requested final pass on an existing implementation | A corrected and simplified local change.                           |
-| `deliver` | Explicitly requested delivery of prepared work       | Commit, push, PR checks/review, and merge when permitted.          |
-| `git-prune` | Cleaning outdated local branches and linked worktrees | Confirmed cleanup, with interactive choices for uncertain items. |
+Invoke with your host's syntax: `$task` in Codex or `/task` in Claude Code.
 
-Invoke skills with your agent's syntax, such as `$task` in Codex or `/task` in
-Claude Code. Delivery must be explicitly invoked; reading or editing its skill
-does not authorize Git or remote changes. Active repository instructions and
-permissions still apply.
+| Skill | Outcome |
+| --- | --- |
+| `pact` | Shared rules embedded in project instructions. |
+| `task` | Approved plan, then a validated local change. |
+| `refine` | Fresh-context review, uncommitted corrections, and a report. |
+| `deliver` | A PR ready for human review, with optional history cleanup and independent CI/comment watchers. |
+| `onboard` | A source-backed maintainer lesson; optionally focus on a subsystem. |
+| `explain` | Clear explanations and human-facing handoffs. |
+| `git-prune` | Confirmed local branch/worktree cleanup; `preview` inspects only. |
 
-Use `$onboard` (or `/onboard`) for a fast maintainer briefing, or focus it with
-`$onboard the authentication subsystem`. It traces real behavior, explains the
-project's patterns and tradeoffs, and walks through a hypothetical change with
-source links and validation guidance. It teaches in the conversation and leaves
-the repository unchanged unless you request an onboarding document.
+Read a skill for its procedure and permissions. Reading or installing one does
+not invoke it. Delivery leaves merging to a human unless directly requested.
+Presentation uses available `explain` guidance, with a standalone fallback.
 
-Use `$explain` (or `/explain`) to explain the last assistant response in clear
-English. Select a target with `$explain this error: ...` or `$explain the code
-above`. It applies [ASD-STE100](https://www.asd-ste100.org/) writing principles
-while preserving technical details and uncertainty; it does not certify STE
-compliance or perform the actions it explains.
+Manage installations with `npx skills list`, `npx skills update`, and
+`npx skills remove <name>`. Add `--global` for global installations.
 
-Use `$git-prune` (or `/git-prune`) to clean up the current repository's outdated
-local branches and linked worktrees. It preserves active work and protected
-branches, and asks about uncertain items through interactive checkboxes or radio
-choices, falling back to a numbered checklist when needed. Invocation authorizes
-the confirmed local cleanup; force deletion needs specific approval. Use
-`$git-prune preview` to inspect the proposed cleanup without deleting anything.
+## Develop
 
-Each directory under `skills/` is self-contained. Installation copies skill
-content and creates agent links (or copies with `--copy`). It does not install
-global instructions, MCP servers, or agent configuration. Run `/pact` (or `$pact`
-in Codex) to add our shared rules to your project's `AGENTS.md`. It preserves
-existing instructions and updates its own marked block when run again.
-
-The rule source is [pact's bundled rules](skills/pact/assets/rules.md). Add future
-shared rules there; update the installed skill and rerun pact to apply them to a
-project. The broader [working agreement](docs/working-agreement.md) remains
-repository documentation and is not copied by pact.
-
-Manage project installations with:
-
-```sh
-npx skills list
-npx skills update
-npx skills remove pact onboard explain task refine deliver git-prune
-```
-
-For global installations, use `npx skills list --global`,
-`npx skills update --global`, and `npx skills remove --global pact onboard explain task refine deliver git-prune`.
-See the [CLI documentation](https://github.com/vercel-labs/skills) for other agents
-and options.
-
-## Development
-
-Edit `skills/<name>/SKILL.md` and keep any supporting files inside that skill's
-directory. Read [AGENTS.md](AGENTS.md) and the
-[authoring guide](docs/instruction-authoring.md) before changing guidance.
-
-This repository contains Markdown skills and documentation. There are no package
-dependencies, build steps, or test scripts. Review skill metadata, instructions,
-and relative links, then preview local discovery without installing:
-
-```sh
-npx skills add . --list
-```
+Read [AGENTS.md](AGENTS.md). Each skill is independently installed from
+`skills/<name>/SKILL.md`; support files stay inside its directory.
+[Authoring rules](docs/instruction-authoring.md) define wording and validation.
+[Pact's rules](skills/pact/assets/rules.md) are the shared-policy source; update
+its installation and rerun pact to apply future changes to another project.
+Maintainer docs under `docs/` are not installed.
 
 ## License
 
