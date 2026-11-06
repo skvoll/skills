@@ -1,47 +1,27 @@
 ---
 name: pact
-description: Add or refresh shared rules, including the No Side Effects Policy, in a project's AGENTS.md. Use when the user asks to apply pact or install these rules in a project.
+description: Embed or refresh the complete bundled rules in a project’s AGENTS.md while preserving existing instructions.
 ---
 
 # Pact
 
-Embed the complete bundled rules in the project's persistent instructions.
-
-## Scope
-
-- Running pact authorizes this local instruction edit only.
-- Installing, reading, or editing the skill does not apply its rules.
-- Commits, pushes, global configuration, and other side effects need separate authorization.
-- Use the named project; otherwise use the current repository root, or working directory outside a repository.
-- Target that project's `AGENTS.md`.
-- Do not follow links outside the project without authorization for the destination.
+Handoffs: use available `explain`; otherwise concise, faithful English.
 
 ## Inspect
 
-- Read all of [assets/rules.md](assets/rules.md), including future additions.
-- Read applicable instructions and the target `AGENTS.md`.
-- Check for conflicting project rules and customizations before editing.
-- For conflicts, explain the exact disagreement and ask how to resolve it.
-- Report equivalent rules outside a pact block. Do not duplicate or silently take them over.
-- For incomplete or duplicate markers, ask rather than guessing replacement boundaries.
+- Read all [bundled rules](assets/rules.md), applicable guidance, and the target `AGENTS.md`.
+- Use the named project; otherwise the repository root, or current directory outside Git. Links outside the project need destination authorization.
+- Report conflicting customizations, equivalent unmanaged rules, or incomplete/duplicate markers before changing them. Do not guess boundaries or take over existing rules.
 
-## Add or refresh
+## Apply
 
-Copy the full rule text verbatim between these markers:
-
-```markdown
-<!-- pact:start -->
-<!-- pact:end -->
-```
-
-- Create `AGENTS.md` if absent; otherwise append the block.
-- If one complete block exists, update it in place.
-- If it already matches, leave the file unchanged.
-- Keep exactly one block. Preserve all content outside it.
-- Embed the rules themselves; an import or link would depend on the skill remaining installed.
+- Invocation authorizes only this local instruction edit; installation or discussion does not apply rules or authorize their described side effects.
+- Embed the full rule text verbatim between `<!-- pact:start -->` and `<!-- pact:end -->`.
+- Create the file if absent; append only if no block exists. Refresh a single complete block in place; leave matching text unchanged.
+- Preserve everything outside the block. An embedded copy must work after the skill is removed.
 
 ## Verify
 
-- Review the diff for complete rules, one block, and unchanged surrounding content.
-- Report the target and outcome: added, refreshed, already present, or blocked.
-- Future rule updates reach a project when the installed skill is updated and pact runs again.
+Check the diff: complete rules, exactly one block, unchanged surrounding text.
+Report the target and outcome: added, refreshed, unchanged, or blocked. Future
+rule updates apply when the installed skill is updated and pact runs again.
