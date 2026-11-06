@@ -5,151 +5,131 @@ description: Clean up outdated local Git branches and linked worktrees, using in
 
 # Git Prune
 
-Clean up all confirmed outdated local branches and linked worktrees in the
-target repository. Resolve uncertain candidates through interactive choices.
-Despite the name, this workflow does not run `git prune` or expire Git objects.
+Remove confirmed outdated local branches and linked worktrees. Resolve uncertain
+targets through interactive choices.
 
-## Authorization and scope
+## Authority
 
-A request to run this cleanup authorizes normal removal of confirmed outdated
-linked worktrees, deletion of confirmed merged local branches, and pruning of
-confirmed stale worktree registrations in this repository. This includes its
-registered linked worktrees outside the current directory, subject to active
-instructions and environment permissions. Reading, editing, or discussing this
-skill does not invoke cleanup. A preview or dry-run request authorizes inspection
-and a proposed plan only.
+- Invocation authorizes normal removal of confirmed outdated linked worktrees, confirmed merged local branches, and confirmed stale worktree registrations.
+- Scope includes this repository's registered worktrees outside the current directory, subject to active instructions and environment permissions.
+- Reading, editing, or discussing this skill does not invoke cleanup.
+- Preview and dry-run requests authorize inspection and a proposed plan only.
+- Do not delete remote branches, fetch, prune remote-tracking refs, change configuration, or switch branches.
+- Do not discard work, reset, stash, run `git clean`, collect garbage, expire objects, or recursively delete directories.
+- This workflow does not run `git prune`.
+- Force needs explicit authorization for the exact target and consequences. Generic cleanup or ordinary removal approval is insufficient.
 
-Remote branch deletion, fetching or pruning remote-tracking refs, changing
-configuration, switching branches, and discarding user work are outside this
-scope. Do not run resets, stashes, `git clean`, garbage collection, or recursive
-filesystem deletion as cleanup shortcuts. Force deletion needs explicit
-authorization for the exact target and its consequences; a generic cleanup
-request or a normal "remove" selection does not grant that authority.
+## Inventory
 
-## Inventory and evidence
+- Read applicable instructions. Resolve the target repository and common Git directory.
+- Inspect only that repository and its registered worktrees.
+- Record and protect both the current and main worktrees.
+- Use `git worktree list --porcelain -z` and `git for-each-ref` over `refs/heads/`.
+- Preserve full paths, ref names, and commit IDs with structured output.
+- Do not parse whitespace-separated columns or pipe branch names into bulk deletion.
+- Inspect every candidate. Show exact branch/path, tip, proposed action, evidence, and risk.
 
-Read applicable repository instructions. Resolve the target repository and its
-common Git directory; inspect only that repository and its registered worktrees.
-Record the current and main worktrees so both remain protected. Inventory with
-`git worktree list --porcelain -z` and `git for-each-ref` over `refs/heads/`.
-Use structured output and preserve full paths, ref names, and commit IDs; do not
-parse whitespace-separated columns or pipe branch names into bulk deletion.
+## Establish integration
 
-Determine the integration base from project guidance, the user's chosen base,
-or an unambiguous default branch. Do not assume the current feature branch is
-the integration base. Protect the default and integration branches, branches
-explicitly retained by the user, and established long-lived branches. If the
-base or a branch's purpose is unclear, ask before deleting affected candidates.
+- Choose the integration base from project guidance, the user's choice, or an unambiguous default branch.
+- Do not assume the current feature branch is the base.
+- Protect default, integration, established long-lived, and user-retained branches.
+- Ask before deleting when the base or branch purpose is unclear.
+- Record each candidate's tip, upstream, integration reachability, and associated worktrees.
+- Find local branches used as upstreams by retained branches; keep those upstreams.
+- Check ancestry with `git merge-base --is-ancestor` on recorded commit IDs.
+- Distinguish exit 1 (not an ancestor) from command failure.
+- Age, absent upstreams, matching names, and closed PRs do not prove safe deletion.
+- Squash or rebase merges need evidence covering the current tip and a user decision when ancestry cannot prove integration.
+- Remote-tracking refs may be stale. Use read-only remote or PR information when needed; do not fetch implicitly.
+- Unproven freshness or integration makes a candidate uncertain.
 
-For each candidate, inspect its tip, upstream, reachability from the integration
-base, and associated worktrees. Identify local branches used as upstreams by
-branches that will be retained. Use `git merge-base --is-ancestor` with the
-recorded commit IDs to establish merged history. Distinguish exit status 1
-(not an ancestor) from a command failure. Commit age, a missing upstream,
-matching names, or a closed PR alone cannot establish safe deletion. Squash or
-rebase merges need additional evidence covering the current tip and a user
-decision when ancestry does not prove integration.
+## Inspect worktrees
 
-Local remote-tracking refs may be stale. Use available read-only remote or PR
-information when needed; do not fetch implicitly. If freshness or integration
-cannot be established, classify the item as uncertain rather than guessing.
-
-For each existing worktree, inspect staged and unstaged changes, untracked and
-ignored files, submodules, locks, worktree-specific refs, and in-progress Git
-operations. Resolve worktree metadata through Git commands rather than assuming
-each worktree has a `.git` directory. For a resolved `worktree_path`, inspect
-status without the optional index refresh:
+- Inspect staged and unstaged changes, untracked and ignored files, submodules, locks, worktree-specific refs, and in-progress Git operations.
+- Resolve metadata through Git; a worktree may have a `.git` file rather than a directory.
+- For a resolved `worktree_path`, inspect status without refreshing the index:
 
 ```sh
 git --no-optional-locks -C "$worktree_path" status \
   --porcelain=v1 -z --untracked-files=all --ignored --ignore-submodules=none
 ```
 
-A clean normal status does not establish that ignored files are disposable.
-Check for signs of active use; do not infer abandonment solely from a merged
-branch or old commit date. A missing path might be moved, inaccessible, or on
-an unmounted device.
+- Normal clean status does not prove ignored files disposable.
+- Check active use. A merged branch or old commit does not prove abandonment.
+- A missing path may be moved, inaccessible, or on an unmounted device.
+- Before removing a worktree or registration, prove its HEAD and worktree-specific refs remain reachable from refs retained after the entire cleanup.
+- Its own reflog and other deletion candidates do not establish preservation.
 
-## Classify and resolve uncertainty
+## Classify
 
-Show a compact inventory with each candidate's exact branch/path, tip, proposed
-action, evidence, and any risk. Evaluate the entire inventory, not just the
-first few candidates. Classify items as:
+### Confirmed outdated
 
-- **Confirmed outdated:** a disposable topic branch whose tip is reachable
-  from the integration base, or its clean, unused, unlocked linked worktree.
-  Worktree removal also requires that any ignored contents are known disposable
-  and no submodules or in-progress operation need preservation. Before removing
-  a worktree or its registration, verify that its HEAD and worktree-specific
-  refs remain reachable from refs retained after the entire cleanup. Its own
-  reflog or another candidate scheduled for deletion does not establish this.
-  A stale registration requires evidence that the worktree was intentionally
-  removed, rather than just an absent path.
-- **Keep:** current/main worktrees, protected branches, active worktrees, and
-  branches still checked out in retained worktrees or used as local upstreams
-  by retained branches. Never switch or detach a retained worktree, or change
-  tracking configuration, to make a branch deletable.
-- **Uncertain:** ambiguous integration, purpose, use, local-only commits,
-  detached history, unexplained ignored contents, dirty or locked worktrees,
-  submodules, missing paths, or failed inspection. Preserve these pending a
-  decision.
+- A disposable topic branch with its tip reachable from the integration base.
+- Its linked worktree, if clean, unused, unlocked, and with preserved history.
+- Worktree removal also requires disposable ignored contents, no submodules needing preservation, and no in-progress operation.
+- A stale registration needs evidence of intentional worktree removal; an absent path alone is insufficient.
 
-Apply keep decisions and dependencies before automatic eligibility. For a
-preview or dry run, report the classifications and proposed actions, then stop
-without executing cleanup.
+### Keep
 
-Use the host's interactive question UI for uncertain items. Prefer a checkbox
-list for independent targets, all initially unchecked, labeled with exact
-targets and consequences. Where only single-choice questions are available,
-use radio choices per target: "Keep (recommended)", "Remove worktree only",
-or "Remove worktree and local branch", as applicable. For a branch alone,
-offer "Keep" and "Delete local branch". Batch questions within host limits;
-do not collapse different risks into a blanket "delete everything" choice.
+- Current and main worktrees, protected branches, and active worktrees.
+- Branches checked out in retained worktrees or used as local upstreams by retained branches.
+- Explicit user keep decisions and their dependencies take priority over automatic eligibility.
+- Never switch or detach a retained worktree, or change tracking, to enable deletion.
 
-Explain the uncertainty and any data that removal would lose in the question.
-Keep worktree removal and branch deletion independently selectable. A decision
-to keep an item or remove only its worktree overrides automatic eligibility;
-retain its branch. If force would be required, use a separate, explicit choice
-naming that operation and the work at risk; ordinary removal approval must not
-escalate to force. Offer only valid combinations: retaining a worktree requires
-retaining its checked-out branch.
+### Uncertain
 
-When no interactive UI is available, present a numbered checklist and request
-selected numbers in text. Never install a UI dependency for this workflow.
-Cancellation, no reply, or an unselected item means keep. An elapsed timeout
-is not approval. Complete independent confirmed cleanup while decisions are
-pending; wait before acting on uncertain targets.
+- Ambiguous integration, purpose, or use; local-only commits or detached history.
+- Dirty or locked worktrees, unexplained ignored files, submodules, or missing paths.
+- Any failed inspection.
+- Preserve these until a decision resolves the uncertainty.
 
-## Execute and verify
+For a preview or dry run, report classifications and proposed actions, then stop.
 
-Before each mutation, recheck the exact target, recorded tip, integration
-evidence, worktree registration, status, locks, and retention dependencies.
-Confirm that commits relied on for preservation will survive all planned
-removals. If anything changed, reclassify it and obtain a fresh decision where
-necessary. Run from a retained worktree and use quoted exact arguments with
-option terminators where supported.
+## Ask about uncertain targets
 
-Remove eligible or specifically approved linked worktrees with
-`git worktree remove <path>`. Honor explicit keep and worktree-only decisions;
-otherwise delete their branches only when independently eligible or specifically
-approved. Delete eligible or specifically approved local branches with
-`git branch -d -- <branch>` only after confirming they are not checked out in
-any remaining worktree. This command checks upstream or HEAD, which may differ
-from the chosen integration base: retain the independent integration check.
-If removal or deletion refuses, inspect the reason; do not automatically retry
-with `--force` or `-D`, unlock a worktree, or bypass Git safeguards.
+- Use the host's interactive question UI.
+- Prefer independent checkbox targets, initially unchecked, with exact names and consequences.
+- With single-choice UI, offer applicable choices per target: “Keep (recommended)”, “Remove worktree only”, or “Remove worktree and local branch”.
+- For a branch alone, offer “Keep” and “Delete local branch”.
+- Explain uncertainty and data at risk. Batch within host limits without a blanket deletion choice.
+- Keep worktree removal and branch deletion separately selectable.
+- A keep or worktree-only decision overrides automatic branch eligibility.
+- Retaining a worktree requires retaining its checked-out branch; offer only valid combinations.
+- If force is needed, ask separately and name the exact operation and work at risk.
+- Without interactive UI, request selected numbers from a numbered checklist. Do not install UI dependencies.
+- Cancellation, no answer, or an unselected target means keep. A timeout is not approval.
+- Complete independent confirmed cleanup while waiting; do not mutate uncertain targets.
 
-For stale registrations, inspect `git worktree prune --dry-run --verbose`.
-Pruning is repository-wide: execute only when every entry in its dry run is
-confirmed or specifically approved. If using an expiration cutoff, keep the
-same explicit cutoff in preview and execution; never broaden it implicitly.
-Recheck the dry run immediately before pruning. If it includes an item to keep,
-leave the batch alone and report the limitation rather than editing Git's
-administrative files manually.
+## Recheck before each mutation
 
-Re-list worktrees and local branches. Verify intended removals and that retained
-worktrees and branches are unchanged. Report removed paths, branch names and
-their former commit IDs, registrations pruned, and items kept or blocked with
-reasons. Explain that worktree contents were deleted; do not promise recovery
-through reflogs, especially for untracked or ignored files. If nothing qualifies,
-report that no cleanup was needed.
+- Recheck the exact target, tip, integration evidence, registration, status, locks, and retention dependencies.
+- Confirm preservation refs survive every planned removal.
+- Reclassify changed targets. Obtain a fresh decision where needed.
+- Run from a retained worktree. Quote exact arguments and use option terminators where supported.
+
+## Remove
+
+- Remove eligible or specifically approved worktrees with `git worktree remove <path>`.
+- Honor keep and worktree-only decisions.
+- Delete branches only when independently eligible or specifically approved, and absent from all remaining worktrees.
+- Use `git branch -d -- <branch>`.
+- Keep the independent integration check: `-d` checks upstream or HEAD, which may differ from the chosen base.
+- On refusal, diagnose. Do not automatically force, use `-D`, unlock, or bypass Git safeguards.
+
+## Prune registrations
+
+- Inspect `git worktree prune --dry-run --verbose`.
+- Pruning is repository-wide. Proceed only when every listed entry is confirmed or specifically approved.
+- Use the same explicit expiration cutoff in preview and execution, if any.
+- Recheck the dry run immediately before execution. Never broaden the cutoff implicitly.
+- If the batch includes a retained item, leave it alone and report the limitation.
+- Do not edit Git administrative files to work around the batch boundary.
+
+## Verify
+
+- Re-list worktrees and local branches.
+- Verify intended removals and unchanged retained worktrees and branches.
+- Report removed paths, branches and former commit IDs, pruned registrations, and kept or blocked items with reasons.
+- State that worktree contents were deleted. Do not promise reflog recovery, especially for untracked or ignored files.
+- If nothing qualifies, report that no cleanup was needed.

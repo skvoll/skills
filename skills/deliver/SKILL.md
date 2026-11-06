@@ -5,83 +5,70 @@ description: Commit and push a prepared change, follow its PR checks and review,
 
 # Deliver
 
-Carry the prepared change through the repository's delivery workflow and verify
-its final state. Reading, rewriting, or discussing this skill does not activate it.
+Carry a prepared change through delivery and verify its final remote state.
 
-## Authorization
+## Authority
 
-Explicit invocation authorizes, for this intended change only: creating a
-delivery branch when needed; staging and committing; pushing; creating or
-updating its PR; monitoring checks and reviews; triggering checks required by
-the normal workflow; committing and pushing narrow delivery fixes; and normal
-merge when protections and reviews permit it without separate human approval.
-Existing user constraints and environment restrictions still apply.
+- Only explicit invocation activates delivery. Reading, editing, or discussing this skill does not.
+- For the intended change, invocation authorizes a delivery branch, staging, commits, pushes, and PR creation or updates.
+- Monitor reviews and checks. Trigger checks required by the normal workflow.
+- Commit and push narrow delivery fixes.
+- Merge normally when protections and reviews permit it without separate human approval.
+- Active user constraints and environment restrictions still apply.
+- Do not force-push, rewrite existing history, discard user work, or bypass checks or reviews.
+- Settings, secrets, unrelated messages, releases, deployments, publications, and infrastructure work need separate authorization.
+- Prepare independent local work before requesting any missing authority.
 
-This excludes force-pushing, rewriting existing history, discarding user work,
-bypassing checks or reviews, changing settings or secrets, and unrelated messages,
-releases, deployments, publications, or infrastructure work. If the workflow
-crosses an additional boundary, prepare the local work and request only the
-missing authorization.
+## Inspect
 
-## Prepare the delivery
+- Read repository instructions, contribution guidance, validation commands, and PR templates.
+- Inspect branch, remotes, upstream, staged and unstaged diffs, relevant untracked files, and the full intended change against its base.
+- Check for an existing PR. Follow branch and commit conventions.
+- Select exact files or hunks. Preserve unrelated changes and existing staging.
+- If changes cannot be separated safely, explain the overlap before changing Git state.
+- If no prepared change exists, report that; do not manufacture a commit.
 
-Read repository instructions, contribution guidance, validation commands, and PR
-templates. Inspect the branch, remotes, upstream, staged and unstaged diffs,
-relevant untracked files, and the full intended change against its base. Check
-for an existing PR and follow repository branch and commit conventions.
+## Prepare
 
-Identify exact files or hunks to deliver. Preserve unrelated changes and existing
-staging; if the work cannot be separated safely, explain the overlap before
-changing Git state. If no prepared change exists, report that instead of
-manufacturing a commit.
+- Follow repository versioning policy before committing.
+- If a bump is required, check whether it already exists. Update the manifest and corresponding lockfile together.
+- Never duplicate a bump or let a version command create an implicit tag or commit.
+- Run required local validation. Inspect the final staged diff.
+- Include only the intended change and required release metadata.
+- Prefer one coherent commit; use independently reviewable units when repository conventions require them.
+- Describe the behavior or outcome in the commit subject.
 
-Apply the repository's versioning policy before the delivery commit. When a
-version bump is required, inspect whether this change already contains it,
-update the package manifest and corresponding lockfile together, and include
-them with the intended change. Do not create a second bump for the same delivery
-or let a version command implicitly create a tag or commit.
+## Submit
 
-Run required local validation and inspect the final staged diff. Include only
-the intended change and required release metadata. Prefer one coherent commit;
-follow repository conventions when independently reviewable units need more.
-Write a subject that describes the behavior or outcome.
+- Push to the intended remote and branch.
+- Create or update the PR when that is the normal workflow.
+- Describe the problem, resulting behavior, validation, and real migration or reviewer concerns.
+- Follow the PR template. Omit development transcripts and empty sections.
 
-## Submit and observe
+## Observe the current head
 
-Push to the intended remote and branch. Create or update the PR if that is the
-repository's normal workflow. Describe the problem and resulting behavior,
-validation performed, and any real migration or reviewer concern. Respect the
-template; avoid development transcripts and empty sections.
+- Inspect checks, review decisions, mergeability, and protections for the current PR head.
+- Monitor at reasonable intervals using available waiting facilities.
+- After every push, reassess checks and approvals for that revision.
+- A previous green result does not validate a new head.
+- Unchanged pending CI or review calls for waiting, not a speculative fix.
+- If monitoring cannot continue, report the exact pending dependency.
 
-Inspect checks, review decisions, mergeability, and protections for the current
-PR head. Monitor at reasonable intervals using available waiting facilities.
-After a new push, reassess checks and approvals for that revision; a previous
-green result does not establish that the new head is ready.
+## Resolve blockers
 
-## Resolve delivery blockers
-
-Diagnose failures before editing. For a narrow defect caused by this change,
-correct it, run relevant checks, review and commit the correction, push, then
-resume observation. Evaluate review feedback against the task before applying
-it. Retry a transient check only with evidence that a retry is justified.
-
-Never weaken tests or protections to get a green result. Stop for a decision when
-a blocker requires new behavior, substantial redesign, unrelated work, unavailable
-credentials, or additional authority. Recommend implementation or refinement when
-appropriate; do not invoke another workflow on the user's behalf. Unchanged
-pending CI or review is a reason to wait, not a failure. If monitoring cannot
-continue, report the exact pending dependency.
+- Diagnose failures before editing.
+- For a narrow defect caused by this change: fix, check, review, commit, push, and resume observation.
+- Evaluate review feedback against the task before applying it.
+- Retry transient checks only when evidence supports a retry.
+- Never weaken tests or protections for a green result.
+- Stop for a decision when a blocker needs new behavior, substantial redesign, unrelated work, credentials, or additional authority.
+- Recommend implementation or refinement when appropriate; do not invoke it on the user's behalf.
 
 ## Verify completion
 
-Merge only when the current head satisfies required checks, approvals, and
-repository rules and no separate human decision is required. Use the normal
-merge method and verify the resulting remote state. Do not assume success from
-a command's exit status alone or perform unrelated post-merge cleanup.
-
-For a documented direct-push workflow, verify that the intended remote branch
-contains the commit and report any required checks. Otherwise, completion means
-a verified merge; a pushed branch or open PR is an intermediate state.
-
-Report the commit, PR when applicable, check/review status, delivery fixes, and
-the verified outcome or precise remaining dependency.
+- Merge only when the current head meets required checks, approvals, and repository rules, with no separate human decision pending.
+- Use the normal merge method. Verify resulting remote state beyond command exit status.
+- Do not perform unrelated post-merge cleanup.
+- For a documented direct-push workflow, verify the remote branch contains the commit and report required checks.
+- Otherwise, completion means a verified merge. A push or open PR is intermediate.
+- Report commit, PR if applicable, checks, review status, delivery fixes, and the verified outcome or precise dependency.
