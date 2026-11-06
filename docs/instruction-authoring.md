@@ -49,6 +49,6 @@ skill directory to share implementation files.
 5. Report word counts and validation honestly. Structural checks do not prove agent behavior.
 
 Consult [source notes](sources.md) when changing format, host behavior, or external
-assumptions. Recheck relevant primary sources; a dated review is not current proof.
+assumptions.
 Add a new rule only for a recurring failure, at its existing source, with a useful
 validation case. Do not accumulate universal cautions after isolated mistakes.

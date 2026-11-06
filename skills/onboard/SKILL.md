@@ -1,88 +1,38 @@
 ---
 name: onboard
-description: Teach a future maintainer how the current repository works through source-backed architecture, execution paths, design tradeoffs, and change guidance. Use for fast, deep codebase onboarding or understanding an unfamiliar subsystem.
+description: Teach a source-backed model of a repository or subsystem, its tradeoffs, and how to make and verify a change. Inspect without implementing.
 ---
 
 # Onboard
 
-Teach a mental model the user can use to predict behavior, locate changes, and verify them.
+Teach enough to predict behavior, locate a change, and verify it.
 
-## Scope
+Handoffs: use available `explain`; otherwise concise, faithful English.
 
-- Inspect files and Git without changing them.
-- Do not implement recommendations, install dependencies, or invoke other workflows.
-- Write an onboarding document only when requested.
-- Respect active instructions and existing work. Inspect commands before optional local execution.
-## Set the audience
+## Orient
 
-- Use the current repository unless another target is named.
-- Honor the user's subsystem, time budget, and experience level.
-- Otherwise assume a competent developer new to the project; aim for a five-minute first briefing.
-- Resolve discoverable facts yourself. Avoid a generic interview.
+- Use the current repository unless named otherwise. Honor scope, experience, and time budget; default to a competent newcomer and a five-minute briefing.
+- Read guidance and status. Establish purpose from entrypoints, interfaces, manifests, and representative tests; verify docs against source.
+- Distinguish committed design from working changes. Sample history for maintenance hotspots without overlooking stable core behavior.
+- In monorepos, map shared boundaries and focus on a relevant package.
+- Follow callers, references, and tests selectively; skip generated/vendor trees unless relevant. Stop once the central path, recurring patterns, and maintenance example are supported.
 
-## Find the central path
+## Trace and explain
 
-- Read repository instructions and inspect status.
-- Establish purpose from entrypoints, manifests, public interfaces, and representative tests.
-- Treat docs, glossaries, and architecture decisions as leads; verify them against source.
-- Distinguish committed design from working-tree changes.
-- Identify the core behavior and the concepts needed to understand it.
-- Sample recent history for maintenance hotspots without losing rarely changed central behavior.
-- In a monorepo, map shared boundaries and trace a relevant package. State the scope.
-## Bound exploration
+- Trace actual entrypoint → decisions → data/state → dependencies → observable output, plus one consequential alternate or failure path.
+- Show detection, surviving state, and caller-visible effects. For declarative projects, trace source to consumed artifact; invent no runtime.
+- Identify ownership, dependency direction, caller obligations, hidden complexity, and cross-file coordination.
+- Explain recurring patterns in project vocabulary: examples, purpose, cost, extension, and meaningful exceptions. Distinguish conventions from one-off choices.
+- Ground design intent in decisions, comments, or history; label inference. Anchor consequential claims to source locations and explain stale-doc discrepancies.
+- Connect invariants, lifecycle, ordering, precedence, compatibility, and external boundaries to concrete breakage and enforcing checks where relevant.
 
-- Follow references, callers, and tests selectively.
-- Skip generated, vendored, and dependency trees unless they explain a relevant boundary.
-- Stop expanding once evidence supports the core path, recurring patterns, and a maintenance example.
-- Name important gaps rather than hiding uncertainty or reading every file.
+## Teach a change
 
-## Trace behavior
+- Walk through a small hypothetical extension: starting point, example to follow, touched contracts/files, naive mistake, expected outcome, and verification.
+- Recover commands from configuration, CI, and docs; distinguish executed checks from inspected commands and explain coverage or missing tests.
+- Lead the lesson with purpose and mental model, then the trace, tradeoffs, and example. Use a small diagram only when helpful.
+- End with scope/gaps, prioritized reading stops and what each teaches, maintenance traps, optional exercise, and specific follow-up topics. Do not require exercise answers.
 
-- Follow one representative behavior from its actual entrypoint to observable output.
-- Show decisions, state changes, data transformations, and dependencies.
-- Trace a consequential failure or alternate path: detection, surviving state, and caller-visible result.
-- Anchor transitions to real symbols and source locations.
-- For a library, trace a public call; for a CLI, a command.
-- For declarative or documentation projects, trace source to the consumed artifact. Do not invent a runtime.
-
-## Explain the design
-
-- Identify responsibility and state ownership, dependency direction, and caller obligations.
-- Show where interfaces hide complexity and where changes require coordination.
-- Use project vocabulary before generic pattern labels.
-- For each consequential recurring pattern, show examples, purpose, cost, and extension points.
-- Separate repeated conventions from one-off choices. Include exceptions that affect maintenance.
-- Ground intent in decisions, history, or comments. Label inferred rationale and its evidence.
-- Identify invariants and the code or checks that enforce them.
-- Where relevant, cover precedence, ordering, lifecycle, compatibility, and external boundaries.
-- Connect each risk to a concrete trigger and consequence.
-
-## Walk through a change
-
-- Choose a small hypothetical change tied to the user's goal or a common extension point.
-- Show where it starts, which example to follow, and which contracts and files it touches.
-- Explain a plausible naive mistake and its consequence.
-- Describe the expected result and verification through existing interfaces. Do not make the edit.
-- Recover development commands from configuration, CI, and docs.
-- Distinguish executed checks from inspected commands; state coverage and limits.
-- If automated tests are absent, explain the actual validation boundary.
-- Do not require project bootstrapping or live-service access for the lesson.
-
-## Teach in layers
-
-- Lead with purpose and a compact mental model. A directory summary alone is not a lesson.
-- Use a small diagram when it clarifies ownership, dependencies, or flow.
-- Explain the traced behavior, decisive patterns, tradeoffs, and maintenance example.
-- Keep the first briefing focused. Link deeper details instead of dumping files.
-- Anchor consequential architectural claims to source; use clickable line links where supported.
-- Separate observations, inferred intent, unknowns, and stale-document discrepancies.
-- Explain what each mechanism means for the user's next decision.
-## Finish the lesson
-
-- Give a prioritized reading path, maintenance traps, and an optional prediction or change-location exercise.
-- Do not gate the briefing on exercise answers.
-- Offer specific follow-up topics; deepen them on request using gathered evidence.
-- Report scope and material unknowns. Avoid claims of exhaustive coverage or unsolicited redesign.
-
-Done means the user can explain central behavior, recognize conventions and their
-limits, locate a plausible change, and identify how to check it.
+Inspect without editing, installing, bootstrapping, or contacting live services;
+check any optional command's effects first. Write a document only when requested.
+The lesson is not an unsolicited redesign or a claim of exhaustive coverage.

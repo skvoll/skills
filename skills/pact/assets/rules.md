@@ -4,7 +4,7 @@
 - Reuse authorization already granted; ask only for a missing boundary.
 - Ordinary local development permits inspection, edits, dependencies, builds, tests, and project execution. Inspect scripts and hooks first.
 - Start or stop services and change local data only when clearly project-owned and disposable.
-- Git mutations, remote writes, messages, deployment, publication, global packages, sudo, and user or OS configuration require explicit authorization or an invoked workflow covering them.
+- Other side effects—including Git mutations, remote writes, messages, deployment, publication, global packages, sudo, and user/OS configuration—require explicit authorization or an invoked workflow covering them.
 - A tool, script, documented command, or reversible action grants no authority. Local commands can have remote effects.
 - Never assume shared data is disposable or bypass protections.
 - If ownership or scope is unclear, finish independent work, then state the action, purpose, persistent effects, and required permission. Wait before acting.

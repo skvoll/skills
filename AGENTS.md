@@ -5,9 +5,7 @@ Portable workflows distributed through the Vercel Skills CLI.
 - Follow the [working agreement](docs/working-agreement.md).
 - Before editing instructions, read the [authoring rules](docs/instruction-authoring.md).
 - Edit `skills/`, not installed copies or user configuration.
-- Each `skills/<name>/` is independently installed. Keep supporting files inside it and link them relatively.
-- Keep names aligned with frontmatter. Use the upstream installer; add no custom adapters.
-- Maintainer guidance belongs in `docs/`; installation does not load it.
+- Use the upstream installer; add no custom adapters.
 
 ## Validation
 
