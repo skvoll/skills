@@ -9,6 +9,11 @@ Publish a prepared change under explicit authority and return its verified state
 Use available `explain` for publication summaries, substantial questions, and
 reports; otherwise concise, faithful English. Ask simple questions directly.
 
+In orchestration, obey the supplied skill allowlist and return additional
+candidates as `needs_approval` before invocation, including through descendants.
+Standalone, only this stage and the established `explain` helper are implicit;
+ask before other skills unless explicitly authorized for that use.
+
 ## Modes and authority
 
 | Mode | Effect after approval |

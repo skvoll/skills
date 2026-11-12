@@ -9,6 +9,11 @@ Inspect the published change and return findings to the caller.
 Use available `explain` for substantial questions and reports; otherwise
 concise, faithful English. Ask simple questions directly.
 
+In orchestration, obey the supplied skill allowlist and return additional
+candidates as `needs_approval` before invocation, including through descendants.
+Standalone, only this stage and the established `explain` helper are implicit;
+ask before other skills unless explicitly authorized for that use.
+
 ## Establish the round
 
 - Resolve the exact repository, PR, base, and head from the caller or platform. Read the request, grounded plan, accepted clarifications, criteria, repository guidance, and required review/check sources.
@@ -19,8 +24,8 @@ concise, faithful English. Ask simple questions directly.
 
 ## Fresh analysis
 
-1. Start one fresh general reviewer, plus distinct focused reviewers when the task or user calls for them. Use the host's available isolation; `fork_turns="none"` only where exposed.
-2. Supply a neutral packet: complete accepted requirements and sources, criteria, repository/PR/base/head, scope, checks, and access limits. Exclude implementer reasoning, desired verdicts, and external reviewers' conclusions.
+1. Before spawning, check the review context for relevant available skills and return new candidates to the caller for approval before affected spawning. Start one fresh general reviewer, plus distinct focused reviewers when the task or user calls for them. Use the host's available isolation; `fork_turns="none"` only where exposed.
+2. Supply a neutral packet: complete accepted requirements and sources, criteria, repository/PR/base/head, scope, checks, access limits, exact approved skill scopes, prior selection decisions, and the ask-before-use boundary. Exclude implementer reasoning, desired verdicts, and external reviewers' conclusions.
 3. Direct each child to the reviewer role below, without recursive spawning. Keep reviewers read-only so parallel review cannot change its subject. Collect external feedback while reviewers run; do not require all workers to finish before reporting a validated blocker.
 4. If fresh context or revision access is unavailable, report the gap. Do not replace required independent review with coordinator self-review or claim a reviewer ran.
 
@@ -48,6 +53,6 @@ concise, faithful English. Ask simple questions directly.
 
 - Recheck base/head before returning. Changed code invalidates affected review evidence; refresh or report that the round no longer covers the current PR.
 - Return the consolidated findings, criteria coverage, actual reviewer coverage, check results, unresolved questions, source links, reviewed revision/cursors, and unfinished work. Mark partial reports explicitly; a useful result need not await every source.
-- Return `changes_required` for validated blocking findings even with unrelated pending work; `needs_input` for decisions blocking safe action; `blocked` for uncovered capability/access failures; otherwise `waiting` for required pending evidence. Preserve every applicable condition in the report.
+- Return `changes_required` for validated blocking findings even with unrelated pending work; `needs_input` for decisions blocking safe action; `needs_approval` for proposed outside skills; `blocked` for uncovered capability/access failures; otherwise `waiting` for required pending evidence. Preserve every applicable condition in the report.
 - Return `complete` only when the current revision has required review/check evidence and no unresolved blocking finding. Preserve optional findings and limitations in the report.
 - Invocation permits read-only PR observation and internal reviewer agents. It does not permit code edits, pushes, reviewer requests, posted comments, replies, thread resolution, or merge. Return to the caller; it owns repairs and delivery.

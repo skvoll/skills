@@ -18,6 +18,7 @@ Record only what is needed to resume:
 | Evidence | Required checks/reviewers, actual results and coverage, revision for each result, missing/pending evidence |
 | Findings | Stable IDs, sources/comment links, severity, relevance, disposition, repair and verification evidence |
 | Authorization | User decision reference, permitted actions/targets, one-time or continuing scope, limits, consumed operations |
+| Skill selection | Discovery scope/context, exact default and candidate identities/sources, pipeline role, helper/replacement use, approved/declined/pending decisions and user references, worker allowlists |
 | Waiting | Pending question/action/review, observation owner/transport/handles, scopes, cadence, absolute deadline, last successful fetch and next check, resume instructions |
 | Delivery of observations | Received source IDs/versions, acknowledged per-source cursors, undelivered events for replay, event dispositions and unfinished work |
 
@@ -28,8 +29,11 @@ or expand permission by itself.
 ## Dispatch and return
 
 Supply each stage its requested operation, accepted requirements, current
-revision, relevant artifacts, constraints, and actual authorization. Reviewer
-packets preserve requirements but exclude implementer reasoning and desired
+revision, relevant artifacts, constraints, actual authorization, exact allowed
+skill identities/scopes, and relevant prior selection decisions. Include the
+ask-before-use rule for outside skills and descendants. For approved alternatives,
+retain both the pipeline role and executing skill identity. Reviewer packets
+preserve requirements but exclude implementer reasoning and desired
 verdicts. Send only context needed for the stage.
 
 Request these result fields: `stage`, `status`, `summary`, `artifacts`,
@@ -40,7 +44,7 @@ requests and source revision for code or PR results. Use:
 - `complete`: this stage's own completion criteria are met.
 - `changes_required`: actionable work remains; include evidence and affected criteria.
 - `needs_input`: a user decision is missing; state its impact and the precise question.
-- `needs_approval`: an exact side effect awaits authorization.
+- `needs_approval`: a specific outside skill/use or exact side effect awaits authorization; identify the source, scope, and proposed action.
 - `waiting`: required external work is pending and no available actionable result can advance the run; identify sources and the observation deadline.
 - `blocked`: a capability, access, failure, or exhausted budget prevents continuation.
 
@@ -55,6 +59,7 @@ return their result to the user without starting a workflow.
 ## Resume
 
 - Re-read active instructions, accepted clarifications, and relevant authorization. Honor cancellation and changed limits.
+- Revalidate skill selections against current context and sources; reuse matching grants/declines and reopen materially changed proposals. Do not turn a saved candidate or pending decision into approval.
 - Inspect the working tree, base/head, PR state, check records, and feedback cursor. Match the PR by repository, head owner/branch, and base.
 - Reconcile published operations against remote state before retrying. Do not duplicate an existing PR, replay a consumed grant, or reopen a closed/merged PR automatically.
 - Changed requirements, base, or code invalidate affected plan/check/review evidence. Fingerprint uncommitted and untracked work as well as HEAD; rerun affected verification before asserting readiness.

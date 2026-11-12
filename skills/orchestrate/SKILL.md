@@ -1,6 +1,6 @@
 ---
 name: orchestrate
-description: Turn a ticket, brief, or detailed prompt into a locally verified change, then an approved draft PR and review-driven repairs. Coordinate orch-plan, orch-implement, orch-refine, orch-deliver, and orch-review; ask before uncovered side effects.
+description: Turn a ticket, brief, or detailed prompt into a locally verified change, then an approved draft PR and review-driven repairs. Coordinate the orch-* stages, discover relevant contextual skills, and ask before invoking alternatives or uncovered side effects.
 ---
 
 # Orchestrate
@@ -15,10 +15,18 @@ otherwise use concise, faithful English. Ask simple questions directly.
 
 - Accept a ticket, description, prompt, or existing run/PR context. Read relevant sources and repository guidance; preserve unrelated work and staging.
 - Resolve the repository, request, and intended outcome from evidence. Ask about consequential unknowns instead of inventing requirements.
-- Locate all five stage skills. Report missing stages before dependent work; do not silently replace them or install tools/configuration.
+- Resolve the five default stage skills from the intended installation and identify the established generic `explain` helper when available. Report missing stages or ambiguous selected identities before affected work; a matching name or prefix alone is not authorization. Install no tools/configuration.
 - Read [run state and handoffs](references/run-state.md). Establish or resume one run record; inspect current local and remote state before trusting saved results.
 - Invocation permits ordinary local development and read-only review, including stage reviewers. It grants no staging, commits, branch/worktree changes, pushes, PR writes, messages, or merge authority.
 - Stage calls inherit the run's actual authorization. Calling `orch-deliver` internally grants no additional permission. Respect user limits such as plan-only or stop-before-publication.
+
+## Select skills before delegation
+
+- Before each stage invocation or subagent spawn, check the task, affected paths, and repository guidance against available repository, organization, and user skill catalogs. Read descriptions first, then relevant candidate sources without invoking them. Refresh discovery when scope, location, or available skills change; reuse unchanged results.
+- The default roles are `orch-plan`, `orch-implement`, `orch-refine`, `orch-deliver`, and `orch-review`; the established generic `explain` is their communication helper. Other skills require explicit approval for the proposed use, including other skills with an `orch-` prefix.
+- When a useful candidate or ambiguous identity is found, read [skill selection and approval](references/skill-selection.md). Present the concrete choice before affected delegation; never preload or execute an unapproved candidate.
+- Supply each worker its exact stage/role, skill allowlist, approved helper scopes, relevant prior selection decisions, and approval boundary. Newly discovered candidates return to this controller as `needs_approval`; workers and their descendants cannot select them independently.
+- Stage names below identify default roles. Dispatch an approved replacement only for its selected role; a helper supplements that role without taking over its contract or the workflow.
 
 ## Local loop
 

@@ -11,12 +11,17 @@ Handoffs: use available `explain`; otherwise concise, faithful English.
 Ask simple questions directly. This stage inspects the local change before
 publication; `orch-review` assesses the published PR.
 
+In orchestration, obey the supplied skill allowlist and return additional
+candidates as `needs_approval` before invocation, including through descendants.
+Standalone, only this stage and the established `explain` helper are implicit;
+ask before other skills unless explicitly authorized for that use.
+
 ## Coordinator
 
 1. Prepare a neutral packet: original request, ticket, current grounded plan and accepted clarifications, acceptance criteria, repository path, base, scope, checks, and access limits. Preserve user wording and source links.
 2. Record staged, unstaged, and relevant untracked work; mark unrelated files out of scope. Ask about ambiguous scope.
 3. Exclude conversation history, implementer reasoning, self-review, preferred fixes, and desired verdicts.
-4. Start a separate context with no inherited conversation; use `fork_turns="none"` only where exposed. Supply the packet and this skill's location; direct the child to the reviewer role, not another spawn.
+4. Before spawning, check the current task context for relevant available skills and return new candidates to the caller for approval before affected spawning. Start a separate context with no inherited conversation; use `fork_turns="none"` only where exposed. Supply the packet, this skill's location, exact approved skill scopes, prior selection decisions, and ask-before-use boundary; direct the child to the reviewer role, not another spawn.
 5. Use the existing working tree and pause coordinator edits to reviewed files. Create no worktree, stash, or transfer commit.
 6. Relay necessary user clarifications neutrally. If fresh context or working-tree access is unavailable, report the blocker; do not substitute self-review.
 
@@ -38,5 +43,5 @@ publication; `orch-review` assesses the published PR.
 - The coordinator checks the resulting diff and reported evidence before returning the result to its caller. Include the reviewed base/head and local diff identity so later changes cannot reuse stale evidence.
 - Preserve unfavorable findings and disclose unsupported claims or discrepancies. Reapply the writing pass only if the report changes.
 - State whether a fresh reviewer actually ran. Separation reduces carry-over bias; it cannot guarantee objectivity.
-- Return `complete` only when criteria and required local checks are satisfied and no blocking finding remains; otherwise return `changes_required`, `needs_input`, or `blocked` with evidence. No corrections needed is a valid result.
+- Return `complete` only when criteria and required local checks are satisfied and no blocking finding remains; otherwise return `changes_required`, `needs_input`, `needs_approval`, or `blocked` with evidence. No corrections needed is a valid result.
 - Invocation permits this reviewer and local corrections, not staging, Git history changes, remote mutations, another review round, or delivery. The caller owns further implementation and looping.

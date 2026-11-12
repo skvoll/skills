@@ -44,6 +44,13 @@ independently and return to their caller. `explain` remains a generic skill;
 plans, substantial questions, and reports use it when available, with a concise
 standalone fallback. Simple questions can be asked directly.
 
+Before delegating a stage, the orchestrator checks relevant repository,
+organization, and user skills. It can propose a specialized helper, such as a
+component generator or preview procedure, or a full stage replacement. It shows
+the exact source, purpose, and effects and asks before invocation. Approval is
+scoped and passed to subagents; it does not waive verification or delivery gates.
+The established generic `explain` helper remains part of the default pipeline.
+
 The orchestrated flow is:
 
 ```mermaid

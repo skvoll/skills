@@ -9,6 +9,11 @@ Investigate and plan without implementing. Return to the caller.
 Use available `explain` for the plan and substantial questions; otherwise
 concise, faithful English. Ask simple questions directly.
 
+In orchestration, obey the supplied skill allowlist and return additional
+candidates as `needs_approval` before invocation, including through descendants.
+Standalone, only this stage and the established `explain` helper are implicit;
+ask before other skills unless explicitly authorized for that use.
+
 ## Investigate
 
 - Read the full request, accepted clarifications, repository guidance, status, relevant diffs, and existing plan if resuming. Preserve user work and staging.
@@ -23,6 +28,7 @@ concise, faithful English. Ask simple questions directly.
 - Give observable acceptance criteria stable IDs and pair each with a validation check. Include needed documentation or regression coverage.
 - Identify required local/remote checks from repository configuration and user decisions. Record requested external reviewers and available completion signals; human review is the final handoff unless explicitly required earlier.
 - Identify side effects and any unresolved authorization; planning grants none.
+- Return relevant contextual skill candidates with their source, affected step, and proposed use; keep unapproved choices pending rather than assuming the plan may invoke them.
 - Incorporate accepted answers and update the plan. Return the plan, evidence, criteria/check mapping, and precise unresolved questions.
-- Report `complete` only when the intended outcome and approach are sufficiently grounded to implement. Otherwise return `needs_input` or `blocked`, with the affected work identified.
+- Report `complete` only when the intended outcome and approach are sufficiently grounded to implement. Otherwise return `needs_input`, `needs_approval`, or `blocked`, with the affected work identified.
 - Stop after the plan. The caller owns implementation and any user-requested approval gate; invoking this skill alone does not start coding.

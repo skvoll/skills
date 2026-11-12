@@ -9,6 +9,11 @@ Make the requested local change and return evidence to the caller.
 Use available `explain` for substantial questions and reports; otherwise
 concise, faithful English. Ask simple questions directly.
 
+In orchestration, obey the supplied skill allowlist and return additional
+candidates as `needs_approval` before invocation, including through descendants.
+Standalone, only this stage and the established `explain` helper are implicit;
+ask before other skills unless explicitly authorized for that use.
+
 ## Establish scope
 
 - Read the request, current plan, accepted clarifications, criteria, repository guidance, status, staging, and relevant untracked work. For repairs, inspect the supplied findings against current code.
