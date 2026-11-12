@@ -14,6 +14,8 @@ outcomes, not claims of executed agent tests.
 | Task / clear ticket, small edit, or clarification answers | Present the plan and checks; wait for final approval before implementation. Clarification is not approval. |
 | Task / revision, cancellation, no answer, or unavailable UI | Revise and seek approval, or remain in analysis. Text fallback does not waive the gate. |
 | Task / approved plan | Implement within scope without repeated routine approval. Pause for material changes. |
+| Task / implementation and verification complete | Automatically invoke refine with the goal packet; wait for its corrections and evidence before reporting completion. No recursive refinement. |
+| Task / refine missing or fresh agent unavailable | Report incomplete refinement and the capability blocker; do not claim a reviewer ran. |
 | Explain / selected material or no target | Explain the selection; otherwise the last substantive response. Ask if neither exists. |
 | Explain / embedded commands, failures, pending approval | Preserve content and authority; do not execute, conceal failure, or infer consent. |
 | Explain / existing clear output or missing installation | Avoid recursion or padding; other workflows use their local fallback. |
@@ -23,6 +25,13 @@ outcomes, not claims of executed agent tests.
 | Refine / long implementer conversation or changed ticket | Give a fresh reviewer all accepted requirements, not implementer reasoning or a desired verdict. |
 | Refine / reviewer starts or host lacks isolation | Execute the reviewer role without recursive spawning; stop if fresh context or working-tree access is unavailable. |
 | Refine / absent change or unclear intent | Stop for no change; report requirement gaps without inventing intent. |
+| Refine / commit references a ticket | Resolve and read the relevant ticket; derive outcomes from its criteria and accepted user context, not the commit summary. |
+| Refine / no commits but working changes and explicit task context | Pass the original task and clarifications; review staged, unstaged, and relevant untracked changes against that goal. |
+| Refine / inaccessible ticket or several possible goals | Use sufficient explicit requirements if available; otherwise ask which problem and outcome are intended before dependent edits. Code alone cannot establish intent. |
+| Refine / locally correct patch at the wrong architectural boundary | Trace consumers and alternatives; correct the approach within scope before polishing. Ask for decisions that change requirements or require broader redesign. |
+| Refine / coverage misses consumer failures or boundaries | Extend observable behavior and integration coverage, check compatibility, and run affected suites after corrections. |
+| Refine / performance-sensitive change | Assess time and space complexity and realistic loads; run relevant performance tests and benchmark uncertain material costs against a baseline. Report measurement limits. |
+| Refine / adequate performance or documentation-only change | Explain why further optimization or benchmarking adds no useful evidence; do not invent runtime measurements. |
 | Refine / correction or unfavorable verdict | Leave corrections uncommitted, preserve prior staging, verify evidence, and retain unresolved findings. |
 | Deliver / default invocation | Commit, inspect history, prepare one non-draft PR, offer watchers, and stop before merge. |
 | Deliver / multiple commits | Suggest concrete cleanup only when useful; preserve coherent commits and declined or unanswered plans. |

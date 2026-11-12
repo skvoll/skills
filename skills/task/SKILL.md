@@ -1,11 +1,11 @@
 ---
 name: task
-description: Analyze a change, get approval for a clear plan, then implement and validate it locally. Use for code, configuration, or documentation tasks.
+description: Analyze a change, get approval for a clear plan, implement and validate it locally, then automatically invoke refine in a fresh agent context. Use for code, configuration, or documentation tasks.
 ---
 
 # Task
 
-Analyze → propose → clarify → approve → implement → verify.
+Analyze → propose → clarify → approve → implement → verify → refine.
 
 Handoffs: use available `explain`; otherwise concise, faithful English.
 
@@ -42,4 +42,6 @@ Handoffs: use available `explain`; otherwise concise, faithful English.
 - Use structural review for low-impact documentation changes. Update durable guidance at its source.
 - Run required checks; broaden only for affected surfaces. Diagnose failures without weakening checks; distinguish pre-existing defects and environment limits.
 - Review the final diff against the plan. Remove only task-created accidents and temporary artifacts.
-- Report changes, validation, and uncertainty. Leave work local; approval does not authorize delivery or unrelated side effects.
+- Once implementation and verification finish, automatically invoke available `refine` before the completion report. Pass the original request, ticket sources, approved goal and plan, accepted clarifications, scope, base, change inventory, check results, and access limits through its coordinator procedure. Its fresh reviewer may make in-scope local corrections; no separate routine approval is needed.
+- Wait for refinement, inspect its resulting diff and evidence, and report changes, validation, and unresolved findings. Do not recursively invoke task or refine after reviewer corrections. If refine is unavailable or cannot spawn a fresh agent, report the missing capability and incomplete refinement; do not claim it ran.
+- Leave work local; approval does not authorize delivery or unrelated side effects.

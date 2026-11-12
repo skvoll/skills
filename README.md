@@ -27,8 +27,8 @@ Invoke with your host's syntax: `$task` in Codex or `/task` in Claude Code.
 | Skill | Outcome |
 | --- | --- |
 | `pact` | Shared rules embedded in project instructions. |
-| `task` | Approved plan, then a validated local change. |
-| `refine` | Fresh-context review, uncommitted corrections, and a report. |
+| `task` | Approved plan, implementation and validation, then automatic refinement. |
+| `refine` | Goal-driven fresh-context architecture review, tested local corrections, and performance assessment. |
 | `deliver` | A PR ready for human review, with optional history cleanup and independent CI/comment watchers. |
 | `onboard` | A source-backed maintainer lesson; optionally focus on a subsystem. |
 | `explain` | Clear explanations and human-facing handoffs. |
