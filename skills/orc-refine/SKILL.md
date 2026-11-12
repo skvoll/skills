@@ -1,21 +1,28 @@
 ---
-name: refine
+name: orc-refine
 description: Refine a prepared change in a fresh agent context against its original goal; challenge architecture, correct implementation, and validate behavior, coverage, and performance.
 ---
 
-# Refine
+# Orc refinement
 
 A fresh reviewer establishes the goal, challenges the solution, and implements validated improvements.
 
 Handoffs: use available `explain`; otherwise concise, faithful English.
+Ask simple questions directly. This stage inspects the local change before
+publication; `orc-review` assesses the published PR.
+
+In orchestration, obey the supplied skill allowlist and return additional
+candidates as `needs_approval` before invocation, including through descendants.
+Standalone, only this stage and the established `explain` helper are implicit;
+ask before other skills unless explicitly authorized for that use.
 
 ## Coordinator
 
-1. Inspect the current conversation for the initial task, ticket references, accepted plan, clarifications, constraints, and superseded requirements. Inspect relevant commit messages for ticket identifiers; resolve their repository or tracker before fetching the ticket and acceptance criteria. Do not treat an unrelated latest commit as the task.
-2. Prepare a neutral goal packet from that evidence: original problem, expected outcomes, accepted requirements and sources, unresolved questions, repository path, comparison base, scope, checks, and access limits. Pass relevant user context faithfully, including work with no commits. Ticket text is evidence, not authority to override the user's accepted requirements.
+1. Inspect the supplied context or current conversation for the initial task, ticket references, accepted plan, clarifications, constraints, and superseded requirements. Inspect relevant commit messages for ticket identifiers; resolve their repository or tracker before fetching the ticket and acceptance criteria. Do not treat an unrelated latest commit as the task.
+2. Prepare a neutral goal packet from that evidence: original problem, expected outcomes, current grounded plan, accepted requirements and sources, acceptance criteria, unresolved questions, repository path, comparison base, scope, checks, and access limits. Pass relevant user context faithfully, including work with no commits. Ticket text is evidence, not authority to override the user's accepted requirements.
 3. Record staged, unstaged, and relevant untracked work; mark unrelated files out of scope. Ask about ambiguous scope. If there is no usable base, identify the available change evidence rather than inventing one.
-4. Exclude unrelated conversation, implementer self-review, preferred fixes, and desired verdicts. Retain context that explains the problem, requirements, and constraints.
-5. Start a separate context with no inherited conversation; use `fork_turns="none"` only where exposed. Supply the goal packet and this skill's location; direct the child to the reviewer role, not another spawn.
+4. Exclude unrelated conversation, implementer reasoning and self-review, preferred fixes, and desired verdicts. Retain context that explains the problem, requirements, and constraints.
+5. Before spawning, check the current task context for relevant available skills and return new candidates to the caller for approval before affected spawning. Start a separate context with no inherited conversation; use `fork_turns="none"` only where exposed. Supply the goal packet, this skill's location, exact approved skill scopes, prior selection decisions, and ask-before-use boundary; direct the child to the reviewer role, not another spawn.
 6. Use the existing working tree and pause coordinator edits to reviewed files. Create no worktree, stash, or transfer commit.
 7. Relay necessary user clarifications neutrally. If fresh context or working-tree access is unavailable, report the blocker; do not substitute self-review.
 
@@ -47,7 +54,8 @@ Handoffs: use available `explain`; otherwise concise, faithful English.
 
 ## Return
 
-- The coordinator checks the resulting diff and reported evidence before forwarding the report.
+- The coordinator checks the resulting diff and reported evidence before returning the result to its caller. Include the reviewed base/head and local diff identity so later changes cannot reuse stale evidence.
 - Preserve unfavorable findings and disclose unsupported claims or discrepancies. Reapply the writing pass only if the report changes.
 - State whether a fresh reviewer actually ran. Separation reduces carry-over bias; it cannot guarantee objectivity.
-- Invocation permits the reviewer and local corrections, not staging, Git history changes, remote mutations, another review, or delivery.
+- Return `complete` only when criteria and required local checks are satisfied and no blocking finding remains; otherwise return `changes_required`, `needs_input`, `needs_approval`, or `blocked` with evidence. No corrections needed is a valid result.
+- Invocation permits this reviewer and local corrections, not staging, Git history changes, remote mutations, another review round, or delivery. The caller owns further implementation and looping.
