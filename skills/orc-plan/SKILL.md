@@ -1,9 +1,9 @@
 ---
-name: orch-plan
-description: Investigate a ticket or description and produce an evidence-backed implementation plan with acceptance criteria, validation, and explicit unresolved decisions. Use standalone or as orchestrate's planning stage.
+name: orc-plan
+description: Investigate a ticket or description and produce an evidence-backed implementation plan with acceptance criteria, validation, and explicit unresolved decisions. Use standalone or as orc's planning stage.
 ---
 
-# Orchestration planning
+# Orc planning
 
 Investigate and plan without implementing. Return to the caller.
 Use available `explain` for the plan and substantial questions; otherwise

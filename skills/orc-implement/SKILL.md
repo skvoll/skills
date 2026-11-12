@@ -1,9 +1,9 @@
 ---
-name: orch-implement
-description: Implement a grounded plan or validated review findings, verify observable behavior, and return a local change. Use standalone or as orchestrate's implementation and repair stage.
+name: orc-implement
+description: Implement a grounded plan or validated review findings, verify observable behavior, and return a local change. Use standalone or as orc's implementation and repair stage.
 ---
 
-# Orchestration implementation
+# Orc implementation
 
 Make the requested local change and return evidence to the caller.
 Use available `explain` for substantial questions and reports; otherwise

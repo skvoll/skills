@@ -22,24 +22,24 @@ Add `--global` for user-wide installation. Preview with `--list`; select with
 
 ## Use
 
-Start with `$orchestrate <context>` in Codex or `/orchestrate <context>` in
+Start with `$orc <context>` in Codex or `/orc <context>` in
 Claude Code. Context can be a ticket, short description, detailed prompt, or
 an existing run to resume.
 
 | Skill | Outcome |
 | --- | --- |
 | `pact` | Shared rules embedded in project instructions. |
-| `orchestrate` | Coordinates local development, approved draft delivery, PR review, repairs, and final handoff. |
-| `orch-plan` | A grounded plan, acceptance criteria, checks, and explicit unresolved decisions. |
-| `orch-implement` | A verified local implementation or repair, with evidence and remaining findings. |
-| `orch-refine` | Fresh review against task goals, architecture checks, local corrections, and performance assessment. |
-| `orch-deliver` | Approved draft publication, updates to the same PR, or final promotion. |
-| `orch-review` | Fresh PR reviews combined with bot/human feedback and current-revision check evidence. |
+| `orc` | Coordinates local development, approved draft delivery, PR review, repairs, and final handoff. |
+| `orc-plan` | A grounded plan, acceptance criteria, checks, and explicit unresolved decisions. |
+| `orc-implement` | A verified local implementation or repair, with evidence and remaining findings. |
+| `orc-refine` | Fresh review against task goals, architecture checks, local corrections, and performance assessment. |
+| `orc-deliver` | Approved draft publication, updates to the same PR, or final promotion. |
+| `orc-review` | Fresh PR reviews combined with bot/human feedback and current-revision check evidence. |
 | `onboard` | A source-backed maintainer lesson; optionally focus on a subsystem. |
 | `explain` | Clear explanations and human-facing handoffs. |
 | `git-prune` | Confirmed local branch/worktree cleanup; `preview` inspects only. |
 
-Install `orchestrate` with all five `orch-*` stages. Stages also work
+Install `orc` with all five `orc-*` stages. Stages also work
 independently and return to their caller. `explain` remains a generic skill;
 plans, substantial questions, and reports use it when available, with a concise
 standalone fallback. Simple questions can be asked directly.
@@ -78,7 +78,7 @@ keeps local run checkpoints and stops on missing capabilities, required evidence
 or authorization. Checkpoints support resumption; these instructions do not
 install a scheduler or promise execution after the host session ends.
 
-`orchestrate` supervises PR observation. Available events or finite snapshots
+`orc` supervises PR observation. Available events or finite snapshots
 return feedback promptly; pending CI does not delay triage of a new comment.
 When polling is needed, defaults are 30 seconds between observations and a
 ten-minute deadline, with progress at least once a minute. The deadline limits
@@ -91,9 +91,10 @@ one does not invoke it. No adapter or user-configuration change is required.
 Manage installations with `npx skills list`, `npx skills update`, and
 `npx skills remove <name>`. Add `--global` for global installations.
 
-The former `task`, `refine`, and `deliver` names are retired. `task` is split
-between orchestration, planning, and implementation; the other stages use the
-`orch-` prefix. Updating this checkout does not remove installed legacy copies.
+`orc` is the working name for this workflow. It replaces `orchestrate`; stages
+use `orc-*` instead of `orch-*`. The former `task`, `refine`, and `deliver` names
+are also retired. `task` is split between orchestration, planning, and
+implementation. Updating this checkout does not remove installed legacy copies.
 Inspect `npx skills list` and remove only confirmed old `skvoll/skills` copies in
 the appropriate scope before reinstalling the renamed workflows.
 

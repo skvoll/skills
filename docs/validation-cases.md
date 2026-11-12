@@ -11,20 +11,20 @@ outcomes, not claims of executed agent tests.
 | Pact / existing instructions | Add one complete verbatim block; preserve surrounding content. |
 | Pact / unchanged or updated block | Leave matching text alone; update only the existing block. |
 | Pact / conflicting rules, equivalent unmanaged rules, incomplete or duplicate markers | Report before altering or duplicating them. |
-| Orchestrate / ticket, brief, or detailed prompt | Ground a plan, implement, and refine locally; no separate task stage or routine plan-approval pause unless requested. |
-| Orchestrate / outcome already satisfied | Verify and report no change needed; manufacture no edit, commit, or PR. |
-| Orchestrate / consequential missing or conflicting requirement | Investigate available facts, then ask; explain substantial choices and pause dependent work without inventing behavior. |
-| Orchestrate / simple choice | Ask directly; explanation does not require a namespaced helper or recursive pass. |
-| Orchestrate / user requests plan-only or plan approval | Honor that limit; the default local loop cannot override it. |
-| Orchestrate / missing stage or fresh-agent capability | Report the dependency before affected work; do not silently replace it, install adapters, or claim independent review. |
-| Orchestrate / implementation and verification complete | Run orch-refine with the accepted goal packet and inspect its corrections and evidence before reporting local readiness; stages return to the controller without recursive refinement. |
-| Orchestrate / local work is ready | Prepare the exact draft operation and ask before staging, commits, branches, pushes, or PR writes without covering authority. |
-| Orchestrate / silence, cancellation, no input UI, or timeout | Keep the gate pending; persist state without side effects or inferred approval. |
-| Orchestrate / one-publication approval or continuing scope | Execute only covered actions; later writes need authority unless the existing grant explicitly covers them. Internal stage calls grant nothing. |
-| Orchestrate / code finding or invalid approach | Repair through implementation/refinement, or replan; publish approved repairs to the same PR and review the published revision. |
-| Orchestrate / repeated finding or exhausted budget | Preserve the finding, explain evidence and options, and stop; replanning does not reset the budget. |
-| Orchestrate / interrupted or corrupt checkpoint | Reconcile actual work and remote results; do not repeat uncertain writes, duplicate a PR, or claim unsupported persistence. |
-| Orchestrate / requirements, base, HEAD, uncommitted or untracked content changed | Invalidate affected evidence and verify again; unchanged HEAD alone is insufficient. |
+| Orc / ticket, brief, or detailed prompt | Ground a plan, implement, and refine locally; no separate task stage or routine plan-approval pause unless requested. |
+| Orc / outcome already satisfied | Verify and report no change needed; manufacture no edit, commit, or PR. |
+| Orc / consequential missing or conflicting requirement | Investigate available facts, then ask; explain substantial choices and pause dependent work without inventing behavior. |
+| Orc / simple choice | Ask directly; explanation does not require a namespaced helper or recursive pass. |
+| Orc / user requests plan-only or plan approval | Honor that limit; the default local loop cannot override it. |
+| Orc / missing stage or fresh-agent capability | Report the dependency before affected work; do not silently replace it, install adapters, or claim independent review. |
+| Orc / implementation and verification complete | Run orc-refine with the accepted goal packet and inspect its corrections and evidence before reporting local readiness; stages return to the controller without recursive refinement. |
+| Orc / local work is ready | Prepare the exact draft operation and ask before staging, commits, branches, pushes, or PR writes without covering authority. |
+| Orc / silence, cancellation, no input UI, or timeout | Keep the gate pending; persist state without side effects or inferred approval. |
+| Orc / one-publication approval or continuing scope | Execute only covered actions; later writes need authority unless the existing grant explicitly covers them. Internal stage calls grant nothing. |
+| Orc / code finding or invalid approach | Repair through implementation/refinement, or replan; publish approved repairs to the same PR and review the published revision. |
+| Orc / repeated finding or exhausted budget | Preserve the finding, explain evidence and options, and stop; replanning does not reset the budget. |
+| Orc / interrupted or corrupt checkpoint | Reconcile actual work and remote results; do not repeat uncertain writes, duplicate a PR, or claim unsupported persistence. |
+| Orc / requirements, base, HEAD, uncommitted or untracked content changed | Invalidate affected evidence and verify again; unchanged HEAD alone is insufficient. |
 | Skill selection / component task with a repository generator | Inspect the candidate read-only, explain helper versus replacement scope, and ask before affected delegation or invocation. |
 | Skill selection / organization or user preview procedure | Inspect relevant exposed catalogs and source; show exact identity, benefit, dependencies, and local/remote effects before asking. |
 | Skill selection / no relevant candidate or unavailable catalog | Continue available default work without a new permission prompt; report discovery limits without claiming exhaustive absence. |
@@ -32,7 +32,7 @@ outcomes, not claims of executed agent tests.
 | Skill selection / user declines, stays silent, or cancels | On decline, use a viable default or report the blocker; on silence, preserve the pending choice; honor cancellation. Repeat no unchanged declined proposal. |
 | Skill selection / prior scoped approval | Reuse it for the same identity/use without asking again; include the approved scope in the worker packet. |
 | Skill selection / new directory, changed task, or materially changed source/effects | Refresh relevant discovery and reopen only proposals outside existing grants; no blind reuse of a name-based approval. |
-| Skill selection / duplicate name or another orch-prefixed skill | Resolve exact origin/path/provider identity; naming alone cannot join the default allowlist. |
+| Skill selection / duplicate name or another orc-prefixed skill | Resolve exact origin/path/provider identity; naming alone cannot join the default allowlist. |
 | Skill selection / helper or replacement reports success | Verify the original stage contract and remaining checks; partial helper output cannot complete the whole stage or authorize a successor. |
 | Skill selection / worker discovers another skill or dependency | Return needs-approval to the orchestrator before invocation; descendants inherit the same restriction, with no script/inlining bypass. |
 | Skill selection / approved skill requests deployment, a push, or messages | Require existing authority for the specific effects or an explicit combined grant; skill selection alone cannot expand permission. |
@@ -47,17 +47,17 @@ outcomes, not claims of executed agent tests.
 | Explain / compliance request | Check official rules and dictionary or disclose the verification gap. |
 | Onboard / focused monorepo or documentation project | Trace the selected behavior or artifact; state scope, patterns, tradeoffs, and validation. Invent no runtime. |
 | Onboard / stale docs, no tests, or improvement opportunity | Explain evidence and actual checks; do not install, implement, or redesign. |
-| Orch-refine / long implementer conversation or changed ticket | Give a fresh reviewer all accepted requirements, not implementer reasoning or a desired verdict. |
-| Orch-refine / reviewer starts or host lacks isolation | Execute the reviewer role without recursive spawning; stop if fresh context or working-tree access is unavailable. |
-| Orch-refine / absent change or unclear intent | Stop for no change; report requirement gaps without inventing intent. |
-| Orch-refine / commit references a ticket | Resolve and read the relevant ticket; derive outcomes from its criteria and accepted user context, not the commit summary. |
-| Orch-refine / no commits but working changes and explicit task context | Pass the original task and clarifications; review staged, unstaged, and relevant untracked changes against that goal. |
-| Orch-refine / inaccessible ticket or several possible goals | Use sufficient explicit requirements if available; otherwise ask which problem and outcome are intended before dependent edits. Code alone cannot establish intent. |
-| Orch-refine / locally correct patch at the wrong architectural boundary | Trace consumers and alternatives; correct the approach within scope before polishing. Ask for decisions that change requirements or require broader redesign. |
-| Orch-refine / coverage misses consumer failures or boundaries | Extend observable behavior and integration coverage, check compatibility, and run affected suites after corrections. |
-| Orch-refine / performance-sensitive change | Assess time and space complexity and realistic loads; run relevant performance tests and benchmark uncertain material costs against a baseline. Report measurement limits. |
-| Orch-refine / adequate performance or documentation-only change | Explain why further optimization or benchmarking adds no useful evidence; do not invent runtime measurements. |
-| Orch-refine / correction or unfavorable verdict | Leave corrections uncommitted, preserve prior staging, verify evidence, and return unresolved findings to the caller. |
+| Orc-refine / long implementer conversation or changed ticket | Give a fresh reviewer all accepted requirements, not implementer reasoning or a desired verdict. |
+| Orc-refine / reviewer starts or host lacks isolation | Execute the reviewer role without recursive spawning; stop if fresh context or working-tree access is unavailable. |
+| Orc-refine / absent change or unclear intent | Stop for no change; report requirement gaps without inventing intent. |
+| Orc-refine / commit references a ticket | Resolve and read the relevant ticket; derive outcomes from its criteria and accepted user context, not the commit summary. |
+| Orc-refine / no commits but working changes and explicit task context | Pass the original task and clarifications; review staged, unstaged, and relevant untracked changes against that goal. |
+| Orc-refine / inaccessible ticket or several possible goals | Use sufficient explicit requirements if available; otherwise ask which problem and outcome are intended before dependent edits. Code alone cannot establish intent. |
+| Orc-refine / locally correct patch at the wrong architectural boundary | Trace consumers and alternatives; correct the approach within scope before polishing. Ask for decisions that change requirements or require broader redesign. |
+| Orc-refine / coverage misses consumer failures or boundaries | Extend observable behavior and integration coverage, check compatibility, and run affected suites after corrections. |
+| Orc-refine / performance-sensitive change | Assess time and space complexity and realistic loads; run relevant performance tests and benchmark uncertain material costs against a baseline. Report measurement limits. |
+| Orc-refine / adequate performance or documentation-only change | Explain why further optimization or benchmarking adds no useful evidence; do not invent runtime measurements. |
+| Orc-refine / correction or unfavorable verdict | Leave corrections uncommitted, preserve prior staging, verify evidence, and return unresolved findings to the caller. |
 | Deliver / invocation without covering authority | Prepare draft mode read-only and request the exact approval; mode selection or an internal call is not permission. |
 | Deliver / approved draft or update | Commit/push only intended changes, reuse the matching open PR, and verify remote state. Draft stays draft; update preserves PR state. |
 | Deliver / multiple commits | Suggest concrete cleanup only when useful; preserve coherent commits and declined or unanswered plans. |

@@ -1,15 +1,15 @@
 ---
-name: orch-refine
+name: orc-refine
 description: Refine a prepared change in a fresh agent context against its original goal; challenge architecture, correct implementation, and validate behavior, coverage, and performance.
 ---
 
-# Orchestration refinement
+# Orc refinement
 
 A fresh reviewer establishes the goal, challenges the solution, and implements validated improvements.
 
 Handoffs: use available `explain`; otherwise concise, faithful English.
 Ask simple questions directly. This stage inspects the local change before
-publication; `orch-review` assesses the published PR.
+publication; `orc-review` assesses the published PR.
 
 In orchestration, obey the supplied skill allowlist and return additional
 candidates as `needs_approval` before invocation, including through descendants.

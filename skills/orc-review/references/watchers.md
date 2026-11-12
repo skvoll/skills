@@ -1,6 +1,6 @@
 # Observe PR changes
 
-Read when monitoring is requested or required evidence is pending. `orchestrate`
+Read when monitoring is requested or required evidence is pending. `orc`
 owns continued observation and action; standalone, the direct caller owns it.
 An observer collects evidence and returns. It never owns repairs or publication.
 

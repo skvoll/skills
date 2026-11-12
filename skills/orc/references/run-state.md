@@ -1,8 +1,9 @@
 # Run state and handoffs
 
 Use a small local record for this run. Prefer the repository's scratch location;
-otherwise use `work/orchestrate/<run-id>/state.json` with adjacent Markdown
-artifacts. Keep these out of delivery. Do not change ignore files or user
+otherwise use `work/orc/<run-id>/state.json` with adjacent Markdown
+artifacts. On resume, reuse the existing checkpoint location. Keep these out of
+delivery. Do not change ignore files or user
 configuration to hide them. Store no credentials or copied secrets.
 
 ## Record

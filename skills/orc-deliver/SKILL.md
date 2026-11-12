@@ -1,9 +1,9 @@
 ---
-name: orch-deliver
+name: orc-deliver
 description: Prepare and execute an explicitly authorized draft publication, update to the same PR, or final handoff. Keep Git and remote writes behind scoped approval; return publication evidence without starting review.
 ---
 
-# Orchestration delivery
+# Orc delivery
 
 Publish a prepared change under explicit authority and return its verified state.
 Use available `explain` for publication summaries, substantial questions, and

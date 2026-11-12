@@ -1,9 +1,9 @@
 ---
-name: orch-review
+name: orc-review
 description: Review an actual PR in fresh agent contexts, collect bot and human feedback plus check results, and return a consolidated evidence-backed report. Observe without editing code or posting comments.
 ---
 
-# Orchestration PR review
+# Orc PR review
 
 Inspect the published change and return findings to the caller.
 Use available `explain` for substantial questions and reports; otherwise
