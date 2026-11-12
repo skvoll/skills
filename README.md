@@ -32,7 +32,7 @@ an existing run to resume.
 | `orchestrate` | Coordinates local development, approved draft delivery, PR review, repairs, and final handoff. |
 | `orch-plan` | A grounded plan, acceptance criteria, checks, and explicit unresolved decisions. |
 | `orch-implement` | A verified local implementation or repair, with evidence and remaining findings. |
-| `orch-refine` | Fresh-context local review and uncommitted corrections. |
+| `orch-refine` | Fresh review against task goals, architecture checks, local corrections, and performance assessment. |
 | `orch-deliver` | Approved draft publication, updates to the same PR, or final promotion. |
 | `orch-review` | Fresh PR reviews combined with bot/human feedback and current-revision check evidence. |
 | `onboard` | A source-backed maintainer lesson; optionally focus on a subsystem. |

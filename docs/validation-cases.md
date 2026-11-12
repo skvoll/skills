@@ -17,6 +17,7 @@ outcomes, not claims of executed agent tests.
 | Orchestrate / simple choice | Ask directly; explanation does not require a namespaced helper or recursive pass. |
 | Orchestrate / user requests plan-only or plan approval | Honor that limit; the default local loop cannot override it. |
 | Orchestrate / missing stage or fresh-agent capability | Report the dependency before affected work; do not silently replace it, install adapters, or claim independent review. |
+| Orchestrate / implementation and verification complete | Run orch-refine with the accepted goal packet and inspect its corrections and evidence before reporting local readiness; stages return to the controller without recursive refinement. |
 | Orchestrate / local work is ready | Prepare the exact draft operation and ask before staging, commits, branches, pushes, or PR writes without covering authority. |
 | Orchestrate / silence, cancellation, no input UI, or timeout | Keep the gate pending; persist state without side effects or inferred approval. |
 | Orchestrate / one-publication approval or continuing scope | Execute only covered actions; later writes need authority unless the existing grant explicitly covers them. Internal stage calls grant nothing. |
@@ -49,6 +50,13 @@ outcomes, not claims of executed agent tests.
 | Orch-refine / long implementer conversation or changed ticket | Give a fresh reviewer all accepted requirements, not implementer reasoning or a desired verdict. |
 | Orch-refine / reviewer starts or host lacks isolation | Execute the reviewer role without recursive spawning; stop if fresh context or working-tree access is unavailable. |
 | Orch-refine / absent change or unclear intent | Stop for no change; report requirement gaps without inventing intent. |
+| Orch-refine / commit references a ticket | Resolve and read the relevant ticket; derive outcomes from its criteria and accepted user context, not the commit summary. |
+| Orch-refine / no commits but working changes and explicit task context | Pass the original task and clarifications; review staged, unstaged, and relevant untracked changes against that goal. |
+| Orch-refine / inaccessible ticket or several possible goals | Use sufficient explicit requirements if available; otherwise ask which problem and outcome are intended before dependent edits. Code alone cannot establish intent. |
+| Orch-refine / locally correct patch at the wrong architectural boundary | Trace consumers and alternatives; correct the approach within scope before polishing. Ask for decisions that change requirements or require broader redesign. |
+| Orch-refine / coverage misses consumer failures or boundaries | Extend observable behavior and integration coverage, check compatibility, and run affected suites after corrections. |
+| Orch-refine / performance-sensitive change | Assess time and space complexity and realistic loads; run relevant performance tests and benchmark uncertain material costs against a baseline. Report measurement limits. |
+| Orch-refine / adequate performance or documentation-only change | Explain why further optimization or benchmarking adds no useful evidence; do not invent runtime measurements. |
 | Orch-refine / correction or unfavorable verdict | Leave corrections uncommitted, preserve prior staging, verify evidence, and return unresolved findings to the caller. |
 | Deliver / invocation without covering authority | Prepare draft mode read-only and request the exact approval; mode selection or an internal call is not permission. |
 | Deliver / approved draft or update | Commit/push only intended changes, reuse the matching open PR, and verify remote state. Draft stays draft; update preserves PR state. |
