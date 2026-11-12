@@ -22,24 +22,66 @@ Add `--global` for user-wide installation. Preview with `--list`; select with
 
 ## Use
 
-Invoke with your host's syntax: `$task` in Codex or `/task` in Claude Code.
+Start with `$orchestrate <context>` in Codex or `/orchestrate <context>` in
+Claude Code. Context can be a ticket, short description, detailed prompt, or
+an existing run to resume.
 
 | Skill | Outcome |
 | --- | --- |
 | `pact` | Shared rules embedded in project instructions. |
-| `task` | Approved plan, then a validated local change. |
-| `refine` | Fresh-context review, uncommitted corrections, and a report. |
-| `deliver` | A PR ready for human review, with optional history cleanup and independent CI/comment watchers. |
+| `orchestrate` | Coordinates local development, approved draft delivery, PR review, repairs, and final handoff. |
+| `orch-plan` | A grounded plan, acceptance criteria, checks, and explicit unresolved decisions. |
+| `orch-implement` | A verified local implementation or repair, with evidence and remaining findings. |
+| `orch-refine` | Fresh-context local review and uncommitted corrections. |
+| `orch-deliver` | Approved draft publication, updates to the same PR, or final promotion. |
+| `orch-review` | Fresh PR reviews combined with bot/human feedback and current-revision check evidence. |
 | `onboard` | A source-backed maintainer lesson; optionally focus on a subsystem. |
 | `explain` | Clear explanations and human-facing handoffs. |
 | `git-prune` | Confirmed local branch/worktree cleanup; `preview` inspects only. |
 
-Read a skill for its procedure and permissions. Reading or installing one does
-not invoke it. Delivery leaves merging to a human unless directly requested.
-Presentation uses available `explain` guidance, with a standalone fallback.
+Install `orchestrate` with all five `orch-*` stages. Stages also work
+independently and return to their caller. `explain` remains a generic skill;
+plans, substantial questions, and reports use it when available, with a concise
+standalone fallback. Simple questions can be asked directly.
+
+The orchestrated flow is:
+
+```mermaid
+flowchart LR
+    P[plan] --> I[implement]
+    I --> F[refine and verify]
+    F -->|Local findings| I
+    F --> A{Publication authorized?}
+    A -->|Yes| D[deliver draft or update]
+    D --> R[review actual PR]
+    R -->|Code findings| I
+    R -->|Approach gap| P
+    R -->|Clear| G{Final delivery authorized?}
+    G -->|Yes| H[deliver final]
+```
+
+Local work continues from grounded requirements; consequential unknowns return
+to the user. Staging, commits, pushes, PR writes, and other side effects require
+explicit scope. A draft approval covers only the stated operation; broader
+authorization can cover later actions without repeated questions. The final
+handoff is a PR ready for human review, not a merge.
+
+The workflow uses the host's existing skill and fresh-agent capabilities. It
+keeps local run checkpoints and stops on missing capabilities, required evidence,
+or authorization. Checkpoints support resumption; these instructions do not
+install a scheduler or promise execution after the host session ends.
+
+Read a skill for its procedure and permissions. Reading, installing, or editing
+one does not invoke it. No adapter or user-configuration change is required.
 
 Manage installations with `npx skills list`, `npx skills update`, and
 `npx skills remove <name>`. Add `--global` for global installations.
+
+The former `task`, `refine`, and `deliver` names are retired. `task` is split
+between orchestration, planning, and implementation; the other stages use the
+`orch-` prefix. Updating this checkout does not remove installed legacy copies.
+Inspect `npx skills list` and remove only confirmed old `skvoll/skills` copies in
+the appropriate scope before reinstalling the renamed workflows.
 
 ## Develop
 

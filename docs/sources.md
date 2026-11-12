@@ -7,7 +7,7 @@ formats, invocation, loading, or host integration.
 | Source | Recorded decision |
 | --- | --- |
 | [Agent Skills specification](https://agentskills.io/specification) | Portable frontmatter and self-contained directories; reviewed 2026-10-09 and 2026-10-20. |
-| [Vercel Skills CLI](https://github.com/vercel-labs/skills) | Delegate discovery and installation upstream. Version 1.7.2 passed discovery and isolated installation on 2026-10-09; 1.7.6 passed discovery during this work. Neither is a repository dependency. |
+| [Vercel Skills CLI](https://github.com/vercel-labs/skills) | Delegate discovery and installation upstream. Version 1.7.2 passed discovery and isolated installation on 2026-10-09; 1.7.6 passed later discovery. On 2026-11-12, upstream documentation was rechecked and 1.8.1 discovered all ten skills after the orchestration refactor. These versions are validation tools, not repository dependencies; discovery does not test live agent or PR behavior. |
 | [AGENTS.md](https://agents.md/) and [Codex loading](https://developers.openai.com/codex/guides/agents-md) | Repository instructions have host-specific loading behavior. |
 | [Codex skills](https://developers.openai.com/codex/skills), [authoring](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra) | Verify current host support; prefer focused, actionable instructions. |
 | [Claude skills](https://code.claude.com/docs/en/skills), [memory](https://code.claude.com/docs/en/memory) | Review on 2026-10-09 recorded direct AGENTS.md support at 2.1.277 and broader sessions at 2.1.281, subject to enabled support and instruction precedence; no CLAUDE.md wrapper. Reverify before relying on this. |
@@ -18,6 +18,6 @@ formats, invocation, loading, or host integration.
 | [Git log](https://git-scm.com/docs/git-log), [gh pr ready](https://cli.github.com/manual/gh_pr_ready), [gh pr checks](https://cli.github.com/manual/gh_pr_checks) | Upstream sources and installed help checked 2026-11-06 for history review, draft promotion, and opt-in CI watching. |
 | ACP [v1 plans](https://github.com/agentclientprotocol/agent-client-protocol/blob/main/docs/protocol/v1/agent-plan.mdx), [v2 plans](https://github.com/agentclientprotocol/agent-client-protocol/blob/main/docs/protocol/v2/agent-plan.mdx), [session modes](https://github.com/agentclientprotocol/agent-client-protocol/blob/main/docs/protocol/v1/session-modes.mdx) | Reviewed 2026-11-06: plan payloads differ; mode guidance points toward session config. Use exposed capabilities, not hard-coded protocol calls. Plan display does not enforce approval. |
 
-Fresh-context refinement uses the host's available isolation mechanism;
+Fresh-context refinement and PR review use the host's available isolation mechanism;
 `fork_turns="none"` applies only where exposed. Context separation reduces
 carry-over bias, not all bias. No persistent-agent or UI capability is assumed.

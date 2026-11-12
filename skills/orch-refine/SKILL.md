@@ -1,17 +1,19 @@
 ---
-name: refine
-description: Independently review a prepared change in a fresh agent context; return validated, uncommitted corrections and a clear report.
+name: orch-refine
+description: Independently inspect and refine a local change in a fresh agent context; return validated, uncommitted corrections and remaining findings to the caller.
 ---
 
-# Refine
+# Orchestration refinement
 
 A fresh reviewer checks the change against the user's requirements.
 
 Handoffs: use available `explain`; otherwise concise, faithful English.
+Ask simple questions directly. This stage inspects the local change before
+publication; `orch-review` assesses the published PR.
 
 ## Coordinator
 
-1. Prepare a neutral packet: original request, ticket, accepted plan and clarifications, repository path, base, scope, checks, and access limits. Preserve user wording and source links.
+1. Prepare a neutral packet: original request, ticket, current grounded plan and accepted clarifications, acceptance criteria, repository path, base, scope, checks, and access limits. Preserve user wording and source links.
 2. Record staged, unstaged, and relevant untracked work; mark unrelated files out of scope. Ask about ambiguous scope.
 3. Exclude conversation history, implementer reasoning, self-review, preferred fixes, and desired verdicts.
 4. Start a separate context with no inherited conversation; use `fork_turns="none"` only where exposed. Supply the packet and this skill's location; direct the child to the reviewer role, not another spawn.
@@ -22,7 +24,7 @@ Handoffs: use available `explain`; otherwise concise, faithful English.
 
 - Read requirements and repository guidance; inspect branch, full diff against the base, staging, and relevant untracked files independently.
 - Derive criteria from the complete accepted requirement set, not implementation intent or commit messages.
-- Stop if no prepared change exists. For missing or conflicting requirements, ask through the coordinator and continue only checks independent of that uncertainty.
+- Stop if no prepared change exists. For missing or conflicting requirements, return precise questions through the coordinator and continue only checks independent of that uncertainty. Do not infer intended behavior from the implementation.
 - Check behavior: omissions, regressions, boundaries, failure paths, compatibility, and affected security, accessibility, or performance.
 - Check design: responsibilities, control flow, duplication, lifecycle, resources, and repository conventions. Verify consequential API assumptions with current sources and installed versions.
 - Apply concrete in-scope corrections; reserve new behavior and broad redesign for a separate task.
@@ -33,7 +35,8 @@ Handoffs: use available `explain`; otherwise concise, faithful English.
 
 ## Return
 
-- The coordinator checks the resulting diff and reported evidence before forwarding the report.
+- The coordinator checks the resulting diff and reported evidence before returning the result to its caller. Include the reviewed base/head and local diff identity so later changes cannot reuse stale evidence.
 - Preserve unfavorable findings and disclose unsupported claims or discrepancies. Reapply the writing pass only if the report changes.
 - State whether a fresh reviewer actually ran. Separation reduces carry-over bias; it cannot guarantee objectivity.
-- Invocation permits the reviewer and local corrections, not staging, Git history changes, remote mutations, another review, or delivery.
+- Return `complete` only when criteria and required local checks are satisfied and no blocking finding remains; otherwise return `changes_required`, `needs_input`, or `blocked` with evidence. No corrections needed is a valid result.
+- Invocation permits this reviewer and local corrections, not staging, Git history changes, remote mutations, another review round, or delivery. The caller owns further implementation and looping.
