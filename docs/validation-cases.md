@@ -58,6 +58,20 @@ outcomes, not claims of executed agent tests.
 | Review / pending or absent required evidence | Return waiting/blocked or explicit justified not-applicable coverage; never infer a pass from silence, missing checks, or an old review. |
 | Review / future human review | Include existing human feedback; do not wait for future human approval unless the user requires it before handoff. |
 | Review / watcher choices, timeout, or no background support | Start only selected/configured scopes with bounded waits; return pending evidence honestly. Watchers authorize no edits, posts, pushes, or merge. |
+| Observation / unresolved comments already exist at startup | Process the initial snapshot immediately; do not skip the backlog by initializing a cursor to now. |
+| Observation / comment arrives while CI or a fresh reviewer is pending | Return and triage it on receipt; a validated blocker triggers local repairs under existing scope without waiting for unrelated sources. |
+| Observation / background worker reports only at completion | Complete a finite snapshot and deliver its result; no multi-minute child loop or reliance on invisible stdout. |
+| Observation / CI fails while other jobs remain pending | Return the failure promptly for diagnosis; a CI watcher cannot suppress the independent comments scope. |
+| Observation / existing comment is edited or review state changes | Detect the source ID/version change even when total counts are unchanged; preserve attribution and assess the new content. |
+| Observation / the same revision has empty repeated ticks | Reuse valid review evidence, preserve the deadline, and consume no repair cycles; do not spawn full reviews per tick. |
+| Observation / event delivery fails or the owner resumes | Replay unacknowledged observations; receipt, triage, and resolution are separate. Do not skip events or duplicate active tasks. |
+| Observation / pending source has no completion signal | Report the gap; silence, reactions, or a quiet window cannot establish completion. |
+| Observation / old task reports after a push | Reject its result as current evidence, retire only owned old-revision tasks, and refresh the new head. |
+| Observation / no reliable callback, missing heartbeat, or busy session scheduler | Inspect the actual task state; use foreground snapshots or report the blocker. Do not claim automatic receipt or install host configuration. |
+| Observation / timeout, cancellation, or one scope completes | Retain evidence and pending sources; stop appropriate owned tasks. A finished CI scope does not cancel pending comments; timeout never implies success. |
+| Observation / API error or rate limiting | Report incomplete coverage and honor server backoff. Never treat an error as no comments or hide findings until the whole wait budget expires. |
+| Observation / old gh lacks JSON check flags | Inspect help and use supported API/connector snapshots; no assumed flags, silent upgrade, or accidental POST from REST query fields. |
+| Observation / standalone watch sees an actionable finding | Report it promptly and request only missing authority; selecting a watcher does not authorize repairs or publication. |
 | Deliver / explicit merge request | Check current head, checks, reviews, and protections; verify the remote result. |
 | Deliver / pending CI, new push, or known blocker | Distinguish pending from passing; refresh evidence for the new head and do not claim unresolved work ready. |
 | Git-prune / clean unused merged topic | Remove only eligible worktrees and branches; preserve protected worktrees, branches, upstreams, and history. |

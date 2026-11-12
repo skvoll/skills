@@ -15,12 +15,13 @@ concise, faithful English. Ask simple questions directly.
 - Inspect the actual PR diff and relevant source at that revision. Local unpublished edits are not PR evidence. Use host read-only revision access; do not checkout, stash, commit, or create a worktree without authority.
 - If the target, requirements, or revision access is ambiguous, return `needs_input` or `blocked`. Do not review a different local tree as if it were published.
 - Record the base/head, review round, feedback cursor, and observation time. Closed or merged PRs return their state; do not reopen them.
+- On a follow-up observation, reuse completed reviews covering unchanged requirements/base/head. Inspect changed feedback or check evidence without spawning another full reviewer set for every tick.
 
 ## Fresh analysis
 
 1. Start one fresh general reviewer, plus distinct focused reviewers when the task or user calls for them. Use the host's available isolation; `fork_turns="none"` only where exposed.
 2. Supply a neutral packet: complete accepted requirements and sources, criteria, repository/PR/base/head, scope, checks, and access limits. Exclude implementer reasoning, desired verdicts, and external reviewers' conclusions.
-3. Direct each child to the reviewer role below, without recursive spawning. Keep reviewers read-only so parallel review cannot change its subject.
+3. Direct each child to the reviewer role below, without recursive spawning. Keep reviewers read-only so parallel review cannot change its subject. Collect external feedback while reviewers run; do not require all workers to finish before reporting a validated blocker.
 4. If fresh context or revision access is unavailable, report the gap. Do not replace required independent review with coordinator self-review or claim a reviewer ran.
 
 ### Reviewer role
@@ -40,12 +41,13 @@ concise, faithful English. Ask simple questions directly.
 - Give findings stable IDs, severity, blocking status, and disposition: actionable, fixed with evidence, duplicate, stale, unsupported with evidence, or deferred outside scope. An outdated thread is not proof its defect is fixed. Conflicting consequential requirements need user input.
 - Track required automated reviews and checks separately from optional feedback. Missing, pending, failed, cancelled, skipped, and unrun results are distinct. No checks found is not proof of a pass; report a justified not-applicable check explicitly.
 - Diagnose failed checks into code findings or environment blockers without weakening checks or silently triggering state-changing CI jobs.
-- Return waiting for required pending evidence. For requested monitoring or a pending source the caller needs to await, read [watching and completion](references/watchers.md).
+- Assess available findings before deciding to wait. Return a validated blocking finding promptly with outstanding checks/reviewers still listed; unrelated pending work cannot suppress `changes_required`.
+- For requested monitoring or pending evidence, read [observation and delivery of results](references/watchers.md). Return the current report and observation plan/active handles to the owner; do not hold the stage open in a multi-minute polling loop.
 
 ## Return
 
 - Recheck base/head before returning. Changed code invalidates affected review evidence; refresh or report that the round no longer covers the current PR.
-- Return the consolidated findings, criteria coverage, actual reviewer coverage, check results, unresolved questions, source links, and reviewed revision/cursor.
-- Return `changes_required` for actionable blocking findings, `needs_input` for consequential unresolved decisions, `waiting` for required pending evidence, or `blocked` for access/capability failures.
+- Return the consolidated findings, criteria coverage, actual reviewer coverage, check results, unresolved questions, source links, reviewed revision/cursors, and unfinished work. Mark partial reports explicitly; a useful result need not await every source.
+- Return `changes_required` for validated blocking findings even with unrelated pending work; `needs_input` for decisions blocking safe action; `blocked` for uncovered capability/access failures; otherwise `waiting` for required pending evidence. Preserve every applicable condition in the report.
 - Return `complete` only when the current revision has required review/check evidence and no unresolved blocking finding. Preserve optional findings and limitations in the report.
 - Invocation permits read-only PR observation and internal reviewer agents. It does not permit code edits, pushes, reviewer requests, posted comments, replies, thread resolution, or merge. Return to the caller; it owns repairs and delivery.

@@ -18,7 +18,8 @@ Record only what is needed to resume:
 | Evidence | Required checks/reviewers, actual results and coverage, revision for each result, missing/pending evidence |
 | Findings | Stable IDs, sources/comment links, severity, relevance, disposition, repair and verification evidence |
 | Authorization | User decision reference, permitted actions/targets, one-time or continuing scope, limits, consumed operations |
-| Waiting | Pending question/action/review, last observed feedback IDs/times, wait limit, resume instructions |
+| Waiting | Pending question/action/review, observation owner/transport/handles, scopes, cadence, absolute deadline, last successful fetch and next check, resume instructions |
+| Delivery of observations | Received source IDs/versions, acknowledged per-source cursors, undelivered events for replay, event dispositions and unfinished work |
 
 Keep durable project decisions in their proper source; this record tracks
 execution. An authorization entry summarizes a user decision and cannot grant
@@ -32,15 +33,20 @@ packets preserve requirements but exclude implementer reasoning and desired
 verdicts. Send only context needed for the stage.
 
 Request these result fields: `stage`, `status`, `summary`, `artifacts`,
-`evidence`, `findings`, and `questions`. Add action/target details for approval
+`evidence`, `findings`, and `questions`. Include observation events/coverage and
+unfinished handles when returning partial review evidence. Add action/target details for approval
 requests and source revision for code or PR results. Use:
 
 - `complete`: this stage's own completion criteria are met.
 - `changes_required`: actionable work remains; include evidence and affected criteria.
 - `needs_input`: a user decision is missing; state its impact and the precise question.
 - `needs_approval`: an exact side effect awaits authorization.
-- `waiting`: required external work is pending; identify the source and observation limit.
+- `waiting`: required external work is pending and no available actionable result can advance the run; identify sources and the observation deadline.
 - `blocked`: a capability, access, failure, or exhausted budget prevents continuation.
+
+Pending checks do not suppress a validated blocking finding. Distinguish an
+observation being received, its finding being assessed, and a repair being
+verified; these are separate transitions.
 
 The orchestrator checks evidence and chooses the next stage. A stage's
 `complete` result does not establish whole-run readiness. Standalone stages
@@ -52,6 +58,6 @@ return their result to the user without starting a workflow.
 - Inspect the working tree, base/head, PR state, check records, and feedback cursor. Match the PR by repository, head owner/branch, and base.
 - Reconcile published operations against remote state before retrying. Do not duplicate an existing PR, replay a consumed grant, or reopen a closed/merged PR automatically.
 - Changed requirements, base, or code invalidate affected plan/check/review evidence. Fingerprint uncommitted and untracked work as well as HEAD; rerun affected verification before asserting readiness.
-- Deduplicate feedback by source ID and track its disposition. Refresh comments before final delivery; late relevant feedback can resume a completed run.
+- Replay unacknowledged events, deduplicating by source ID and version so edits to existing comments remain visible. Recheck handles and the original deadline; do not duplicate watchers or silently extend a budget. Refresh comments before final delivery; late relevant feedback can resume a completed run.
 - If a checkpoint is missing or corrupt, reconstruct from observable state and report gaps. Ask only where facts or authorization cannot be established.
 - Checkpoints support resumption; they do not create a scheduler or keep an agent running after its host session ends.

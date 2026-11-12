@@ -40,11 +40,20 @@ otherwise use concise, faithful English. Ask simple questions directly.
 ## PR loop
 
 1. After draft publication or an update, call `orch-review` against the actual PR revision. Gather its fresh reviews, external feedback, and check results.
-2. Return actionable code findings to `orch-implement`, then `orch-refine` and verification, using the existing plan. Return approach gaps to planning; route consequential requirement conflicts to the user through `explain`.
+2. Consume each returned finding as it arrives; do not wait for all reviewers or CI jobs. Return validated code findings to `orch-implement`, then `orch-refine` and verification, using the existing plan. Return approach gaps to planning; route consequential requirement conflicts to the user through `explain`.
 3. Publish repairs through the delivery gate, then review the updated PR. A local repair does not resolve a finding on an unchanged remote revision.
-4. For required pending evidence, use supported bounded waits. On timeout or unavailable monitoring, checkpoint and report waiting/blocked status; never infer success or promise unsupported background work.
+4. For pending evidence with no actionable work, supervise the observation plan returned by `orch-review` as below. Waiting is a controller state, not a long-running delivery stage.
 5. Call `orch-deliver` in `final` mode only when current-revision evidence is complete, blocking findings are resolved, and final delivery is authorized. Refresh feedback before promotion; new material findings reopen the loop.
 6. Report the PR, delivered revision, verification, review coverage, and remaining limitations. End at ready for human review. Merging is outside this run.
+
+## Supervise observation
+
+- Own the feedback consumer, active handles, cadence, deadline, and cancellation. Delivery publishes once and returns; observers report evidence; this controller decides what happens next.
+- Consume a baseline immediately, then each native event or finite snapshot. Drain available results before waiting again; comments must remain observable while CI is pending. Do not join independent observers until all finish.
+- Persist received events and their source versions before acknowledging cursors. Pass changed evidence to `orch-review` for triage; reuse valid completed review evidence for the same revision.
+- Act on verified in-scope findings under the run's existing local-development authority. Watching alone grants no extra permissions; publication, replies, reviewer requests, and other uncovered effects still use the approval gate.
+- Use the observation plan's bounded cadence/deadline and brief waiting updates. If the owner cannot receive events reliably, collect foreground snapshots or checkpoint the exact limitation; do not leave an orphan watcher or claim automatic action after the session ends.
+- On revision change, stop or retarget this run's old observers and refresh affected evidence. On cancellation/completion, stop its remaining tasks. Track observation ticks separately from corrective cycles and never silently renew an expired observation budget.
 
 ## Stop and recover
 

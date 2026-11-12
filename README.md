@@ -71,6 +71,13 @@ keeps local run checkpoints and stops on missing capabilities, required evidence
 or authorization. Checkpoints support resumption; these instructions do not
 install a scheduler or promise execution after the host session ends.
 
+`orchestrate` supervises PR observation. Available events or finite snapshots
+return feedback promptly; pending CI does not delay triage of a new comment.
+When polling is needed, defaults are 30 seconds between observations and a
+ten-minute deadline, with progress at least once a minute. The deadline limits
+waiting; it does not delay findings. Standalone observation reports findings;
+the orchestrator owns authorized repairs and approval-gated publication.
+
 Read a skill for its procedure and permissions. Reading, installing, or editing
 one does not invoke it. No adapter or user-configuration change is required.
 
