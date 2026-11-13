@@ -24,6 +24,7 @@ Handoffs: use available `explain`; otherwise concise, faithful English.
 - Identify ownership, dependency direction, caller obligations, hidden complexity, and cross-file coordination.
 - Explain recurring patterns in project vocabulary: examples, purpose, cost, extension, and meaningful exceptions. Distinguish conventions from one-off choices.
 - Ground design intent in decisions, comments, or history; label inference. Anchor consequential claims to source locations and explain stale-doc discrepancies.
+- When browser observation helps, use available `browser-check` or Chrome MCP/Chrome DevTools MCP on a source/revision-matched running target; record URL/revision, steps/results and gaps. Missing tools need exact source/version, setup/profile scope and effects from current primary docs; return to an authorized owner for agreement, supported setup and callable verification. Change no app/shared data.
 - Connect invariants, lifecycle, ordering, precedence, compatibility, and external boundaries to concrete breakage and enforcing checks where relevant.
 
 ## Teach a change
@@ -33,6 +34,6 @@ Handoffs: use available `explain`; otherwise concise, faithful English.
 - Lead the lesson with purpose and mental model, then the trace, tradeoffs, and example. Use a small diagram only when helpful.
 - End with scope/gaps, prioritized reading stops and what each teaches, maintenance traps, optional exercise, and specific follow-up topics. Do not require exercise answers.
 
-Inspect without editing, installing, bootstrapping, or contacting live services;
-check any optional command's effects first. Write a document only when requested.
+Inspect without editing, installing, or bootstrapping; access live targets only
+within task authority. Check optional commands' effects first. Write a document only when requested.
 The lesson is not an unsolicited redesign or a claim of exhaustive coverage.

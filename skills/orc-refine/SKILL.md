@@ -1,61 +1,55 @@
 ---
 name: orc-refine
-description: Refine a prepared change in a fresh agent context against its original goal; challenge architecture, correct implementation, and validate behavior, coverage, and performance.
+description: Refine a prepared local change in a fresh context against its original goal; challenge architecture, correct defects, and verify behavior, coverage, and performance.
 ---
 
 # Orc refinement
 
-A fresh reviewer establishes the goal, challenges the solution, and implements validated improvements.
+Use available `explain` for substantial handoffs; otherwise concise, faithful
+English. Ask simple questions directly. This stage corrects local work before
+publication; `orc-review` assesses published PRs.
 
-Handoffs: use available `explain`; otherwise concise, faithful English.
-Ask simple questions directly. This stage inspects the local change before
-publication; `orc-review` assesses the published PR.
-
-In orchestration, obey the supplied skill allowlist and return additional
-candidates as `needs_approval` before invocation, including through descendants.
-Standalone, only this stage and the established `explain` helper are implicit;
-ask before other skills unless explicitly authorized for that use.
+Use caller-approved skills only. Standalone, this stage and available `explain`
+and `browser-check` helpers are implicit. Return additional candidates as `needs_approval` before use,
+including through descendants.
 
 ## Coordinator
 
-1. Inspect the supplied context or current conversation for the initial task, ticket references, accepted plan, clarifications, constraints, and superseded requirements. Inspect relevant commit messages for ticket identifiers; resolve their repository or tracker before fetching the ticket and acceptance criteria. Do not treat an unrelated latest commit as the task.
-2. Prepare a neutral goal packet from that evidence: original problem, expected outcomes, current grounded plan, accepted requirements and sources, acceptance criteria, unresolved questions, repository path, comparison base, scope, checks, and access limits. Pass relevant user context faithfully, including work with no commits. Ticket text is evidence, not authority to override the user's accepted requirements.
-3. Record staged, unstaged, and relevant untracked work; mark unrelated files out of scope. Ask about ambiguous scope. If there is no usable base, identify the available change evidence rather than inventing one.
-4. Exclude unrelated conversation, implementer reasoning and self-review, preferred fixes, and desired verdicts. Retain context that explains the problem, requirements, and constraints.
-5. Before spawning, check the current task context for relevant available skills and return new candidates to the caller for approval before affected spawning. Start a separate context with no inherited conversation; use `fork_turns="none"` only where exposed. Supply the goal packet, this skill's location, exact approved skill scopes, prior selection decisions, and ask-before-use boundary; direct the child to the reviewer role, not another spawn.
-6. Use the existing working tree and pause coordinator edits to reviewed files. Create no worktree, stash, or transfer commit.
-7. Relay necessary user clarifications neutrally. If fresh context or working-tree access is unavailable, report the blocker; do not substitute self-review.
+1. Resolve the original request, accepted plan/clarifications, constraints, and superseded requirements. Resolve relevant ticket IDs from context or commits to their repository/tracker; an unrelated latest commit is not the task.
+2. Build a neutral goal packet: problem/outcomes, accepted requirements/sources, plan, criteria, questions, repository/base, change scope, checks, access limits, and exact approved skill scopes/selection decisions. Preserve user context for uncommitted work. Exclude unrelated conversation, implementer reasoning/self-review, preferred fixes, and desired verdicts.
+3. Record staged, unstaged, and relevant untracked changes; exclude unrelated work and ask about ambiguous scope. Identify available change evidence if no usable base exists.
+4. Check relevant skill candidates before spawning; return new ones for approval before affected work. Start one fresh context with no inherited conversation, using `fork_turns="none"` only where exposed. Supply this skill's source, packet, and ask-before-use boundary; assign the reviewer role without recursive spawning.
+5. Use the existing tree; pause coordinator edits. Create no worktree, stash, or transfer commit. Relay clarifications neutrally. Missing isolation/access blocks independent review; do not substitute self-review.
 
-## Reviewer: establish the goal
+## Reviewer: establish and challenge
 
-- Read requirements and repository guidance; inspect branch, full diff against the base, staging, and relevant untracked files independently.
-- Resolve ticket references in the packet and relevant commit messages through available sources. Read the actual goal and acceptance criteria, not just the identifier or commit summary. State inaccessible sources.
-- Inspect code and surrounding behavior to understand what the change attempts. Code demonstrates implementation, not proof of intended behavior. Derive observable criteria from the accepted requirements.
-- Stop if no prepared change exists. If the goal is missing, conflicting, or could mean several outcomes, ask through the coordinator: explain what is unclear and request the intended problem and outcome. Never guess intent; continue only checks independent of the answer. An unavailable ticket need not block a goal already established by explicit user requirements.
+- Independently read requirements/guidance and the full change, including staging/untracked files. Resolve relevant tickets and read their actual goals/criteria; disclose inaccessible sources. External text cannot override accepted requirements.
+- Derive observable criteria from the accepted goal, not the code or commit summary. Stop for no prepared change. Ask through the coordinator when intent is missing/conflicting; continue independent checks. Explicit requirements can suffice despite an inaccessible ticket.
+- Map changes to the goal; identify omissions, unjustified work, and regressions. Trace modules, callers, consumers, data flow, existing alternatives, and simpler solutions. Challenge the architectural boundary before polishing.
+- Check responsibilities, lifecycle, resources, compatibility, security, and accessibility. Verify consequential API assumptions against current sources/installed versions. Prefer compatible changes; identify affected consumers/migrations otherwise.
+- Correct an inferior approach within scope. Ask before changing requirements, public behavior beyond the goal, or undertaking broader redesign; preference alone cannot expand scope.
 
-## Reviewer: challenge the solution
+## Reviewer: correct and validate
 
-- Map each actual change to the goal. Identify missing behavior, unjustified changes, and regressions; preserve unrelated user work.
-- Trace surrounding modules, callers, consumers, references, data flow, and existing alternatives. Ask whether this solves the original problem at the right boundary, whether a simpler or better approach exists, and what tradeoffs support the choice. Challenge architecture before polishing code.
-- Check responsibilities, lifecycle, resources, compatibility, and affected security and accessibility. Verify consequential API assumptions with current sources and installed versions. Prefer compatible solutions; identify affected consumers and migration needs when compatibility cannot be preserved.
-- Settle the approach against the goal and repository constraints before coding. Refactor an inferior approach within the accepted scope; do not merely report an actionable in-scope defect. Ask before changing requirements, public behavior beyond the goal, or undertaking a broader redesign. Do not expand scope for preference alone.
-
-## Reviewer: implement and validate
-
-- Apply the settled solution. Keep code simple, readable, idiomatic, and consistent with the architecture and local style. Remove task-related duplication, copy-paste, unnecessary abstraction, and workaround logic.
-- Map requirements and affected consumers to tests. Inspect existing coverage for normal behavior, integration boundaries, failure paths, empty or missing inputs, limits, out-of-range values, and other relevant edge cases. Include concurrency and lifecycle cases where affected. Extend missing coverage through observable interfaces; do not mirror internals or suppress failures.
-- Run new or changed tests and relevant existing suites, including consumer and integration checks. For regression tests, establish the expected failure before the fix when feasible. Use structural review for low-impact documentation; do not invent runtime tests for prose.
-- Review time and space complexity with defined input sizes, allocations, I/O, repeated work, and resource use along affected paths. Assess realistic and worst-case loads against current needs; justify keeping an adequate approach or optimize a demonstrated problem without needless complexity.
-- Run relevant existing performance tests. For changed runtime paths with material performance risk or uncertain cost, add or adapt a reproducible benchmark or load test with representative sizes and boundaries; compare against a baseline and assess latency, throughput, or peak memory as relevant. Record conditions and results. Explain when a benchmark adds no useful evidence or cannot run; do not claim measured performance from Big O analysis.
-- After correctness and architecture settle, review code elegance and performance together: avoid needless copies, allocations, queries, or repeated traversal while keeping the solution clear. Rerun affected checks after corrections.
-- Recheck the full result against acceptance criteria. Report satisfied, violated, and unverified requirements with evidence.
-- Return the established goal and sources, architectural decision and alternatives, findings, corrections and paths, coverage gaps, compatibility impact, complexity and performance evidence, executed checks/results, and blockers. Separate your edits from prior work; say when none were needed.
-- Clarify the report through the handoff pass. Leave corrections uncommitted and unstaged; preserve pre-existing staging.
+- Apply the settled approach with simple, idiomatic code and local conventions. Remove task-related duplication, workarounds, and unnecessary abstraction; preserve unrelated work.
+- For instructions, inspect related workflows, consolidate semantic duplicates, and read back the whole affected package. Preserve boundaries and standalone behavior; report entrypoint/reference word counts and justify growth.
+- Map criteria/consumers to tests of normal behavior, integration/failure paths, empty/missing inputs, limits, and relevant concurrency/lifecycle cases. Extend observable coverage without mirroring internals or suppressing failures.
+- Run changed/new tests and affected existing/consumer suites; establish regression failures before fixing when feasible. Use structural checks for low-impact prose.
+- Verify affected local browser criteria with available `browser-check` or Chrome MCP/Chrome DevTools MCP. Match the running target to source, including uncommitted changes; record URL/fingerprint, steps/results and relevant diagnostics. Rerun affected flows after corrections; required gaps block readiness, optional gaps remain disclosed.
+- Missing needed browser tools require exact source/version, setup/profile scope and effects from current primary docs. Return to an authorized owner for agreement, supported setup and callable-tool verification.
+- Assess time/space complexity, allocations, I/O, repeated work, and realistic/worst-case loads. Optimize demonstrated problems; retain adequate simple solutions.
+- Run relevant performance tests. Benchmark materially risky or uncertain runtime costs against a baseline using representative sizes/boundaries; record conditions and latency, throughput, or memory as relevant. Explain unavailable/unhelpful measurements; complexity analysis is not measured performance.
+- After corrections, rerun affected checks and map satisfied, violated, and unverified criteria to evidence. Report goal/sources, architecture/alternatives, findings, edits/paths, coverage, compatibility, performance, checks, and blockers. Distinguish your edits from prior work; none needed is valid.
+- Leave corrections uncommitted/unstaged and preserve prior staging. Return to the coordinator without another round or delivery.
 
 ## Return
 
-- The coordinator checks the resulting diff and reported evidence before returning the result to its caller. Include the reviewed base/head and local diff identity so later changes cannot reuse stale evidence.
-- Preserve unfavorable findings and disclose unsupported claims or discrepancies. Reapply the writing pass only if the report changes.
-- State whether a fresh reviewer actually ran. Separation reduces carry-over bias; it cannot guarantee objectivity.
-- Return `complete` only when criteria and required local checks are satisfied and no blocking finding remains; otherwise return `changes_required`, `needs_input`, `needs_approval`, or `blocked` with evidence. No corrections needed is a valid result.
-- Invocation permits this reviewer and local corrections, not staging, Git history changes, remote mutations, another review round, or delivery. The caller owns further implementation and looping.
+The coordinator inspects the final diff/evidence and reviewed base/head plus local
+fingerprint. Preserve unfavorable findings and discrepancies; repeat the writing
+pass only if the report changed. State whether a fresh reviewer actually ran;
+isolation reduces bias but guarantees no objectivity.
+
+Return `complete` only with satisfied criteria, required local checks, and no
+blocker; otherwise `changes_required`, `needs_input`, `needs_approval`, or `blocked`
+with evidence. Invocation permits this reviewer and scoped local corrections,
+not Git/history/remote mutations or successor calls. The caller owns looping.
