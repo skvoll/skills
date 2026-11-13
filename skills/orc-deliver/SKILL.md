@@ -38,7 +38,7 @@ head, checks/reviews, protections, and remote result.
 - Read guidance, templates/versioning rules, requirements, full prepared diff against the intended base, check evidence, and review report. Inspect branch/remotes/upstream, status/staging, and relevant untracked files.
 - Match existing PR by repository, head owner/branch, and base; resolve ambiguity. Reuse its open PR; never automatically reopen closed or reuse merged PRs.
 - Proceed only for a prepared change, undelivered commit, or requested transition. Preserve unrelated work/staging; select exact files/hunks, exclude checkpoints, and explain inseparable overlap.
-- Require evidence for the actual intended change. Return defects, scope/versioning gaps, and missing checks; preparation hides no implementation.
+- Require evidence for the actual intended change, including applicable local browser checks before publication. Return defects, scope/versioning gaps, and missing checks; preparation hides no implementation.
 - Follow the template; otherwise describe What/Why/Validation with real risks/migrations. Preserve human context, remove stale claims, and distinguish check states. Use repository naming or task-based, agent-neutral branch/commit/PR names.
 - Apply `explain`; return one operation packet with target/revision, content, evidence, exact effects, and missing authority.
 
@@ -53,7 +53,7 @@ head, checks/reviews, protections, and remote result.
 ## Final handoff
 
 Require complete local verification and PR review evidence for the current
-base/head, resolved blockers, and authority for the final transition. Publish no
+base/head, including applicable deployed browser checks, resolved blockers, and authority for the final transition. Publish no
 code in final mode. Refresh required checks/reviews and feedback since the saved
 cursor immediately before promotion.
 New material feedback, changed revisions, pending evidence, or unpublished code

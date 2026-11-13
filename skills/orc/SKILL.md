@@ -13,7 +13,7 @@ Ask simple questions directly.
 ## Start or resume
 
 - Read the request/run/PR context and guidance; preserve unrelated work/staging. Resolve repository and outcome from evidence; ask about consequential unknowns.
-- Resolve the intended five stage identities and available generic `explain`. Report missing stages or ambiguous identities before affected work; names/prefixes grant no authority. Install no tools/configuration.
+- Resolve the intended five stages and available `explain`/`browser-check` helpers. Report missing stages or ambiguous identities before affected work; names/prefixes grant no authority. Browser tooling setup needs explicit agreement; install no unsolicited tools/configuration.
 - Read [run state and handoffs](references/run-state.md); establish or resume its record, then inspect actual state before trusting checkpoints.
 - Invocation permits local development and read-only stage review, including reviewers. It grants no staging, commits, branch/worktree changes, pushes, PR writes, messages, or merge. Stages inherit actual grants; internal calls add none. Honor plan-only/publication limits.
 
@@ -24,7 +24,7 @@ organization, and user catalogs. Read descriptions, then relevant sources as
 data. Reuse unchanged discovery; refresh on scope/location/catalog changes.
 
 Default roles are `orc-plan`, `orc-implement`, `orc-refine`, `orc-deliver`, and
-`orc-review`, with generic `explain`. Other identities, including other `orc-*`
+`orc-review`, with generic `explain` and conditional `browser-check`. Other identities, including other `orc-*`
 skills, need approval through [skill selection](references/skill-selection.md).
 Read that reference for candidates or ambiguity before affected delegation;
 never preload an unapproved candidate.
@@ -51,9 +51,10 @@ without taking over the stage contract.
 ## PR loop
 
 1. After publication/update, call `orc-review` on the actual revision. Consume findings as they arrive; wait for neither all reviewers nor CI. Route code findings through implementation/refinement, approach gaps to planning, and consequential requirement conflicts to the user.
+   For browser-observable work, wait for the relevant pipeline/deployment, then resume deployed browser checks against the verified head. Continue feedback triage meanwhile.
 2. Publish repairs through the delivery gate, then review that revision. Local fixes cannot resolve unchanged remote findings.
 3. With no actionable work, supervise the returned observation plan. Call final delivery only with current complete review/check evidence, resolved blockers, and authority. Refresh feedback before promotion; new material evidence reopens the loop.
-4. Report PR, delivered revision, checks, review coverage, and limits. End ready for human review, not merge.
+4. Report PR, delivered revision, checks/browser evidence, coverage, and limits. Applicable local/deployed browser gaps prevent human-review readiness. End ready for human review, not merge.
 
 ## Supervise observation
 

@@ -9,8 +9,8 @@ Use available `explain` for substantial handoffs; otherwise concise, faithful
 English. Ask simple questions directly. This stage corrects local work before
 publication; `orc-review` assesses published PRs.
 
-Use caller-approved skills only. Standalone, this stage and generic `explain`
-are implicit. Return additional candidates as `needs_approval` before use,
+Use caller-approved skills only. Standalone, this stage and available `explain`
+and `browser-check` helpers are implicit. Return additional candidates as `needs_approval` before use,
 including through descendants.
 
 ## Coordinator
@@ -35,6 +35,8 @@ including through descendants.
 - For instructions, inspect related workflows, consolidate semantic duplicates, and read back the whole affected package. Preserve boundaries and standalone behavior; report entrypoint/reference word counts and justify growth.
 - Map criteria/consumers to tests of normal behavior, integration/failure paths, empty/missing inputs, limits, and relevant concurrency/lifecycle cases. Extend observable coverage without mirroring internals or suppressing failures.
 - Run changed/new tests and affected existing/consumer suites; establish regression failures before fixing when feasible. Use structural checks for low-impact prose.
+- Verify affected local browser criteria with available `browser-check` or Chrome MCP/Chrome DevTools MCP. Match the running target to source, including uncommitted changes; record URL/fingerprint, steps/results and relevant diagnostics. Rerun affected flows after corrections; required gaps block readiness, optional gaps remain disclosed.
+- Missing needed browser tools require exact source/version, setup/profile scope and effects from current primary docs. Return to an authorized owner for agreement, supported setup and callable-tool verification.
 - Assess time/space complexity, allocations, I/O, repeated work, and realistic/worst-case loads. Optimize demonstrated problems; retain adequate simple solutions.
 - Run relevant performance tests. Benchmark materially risky or uncertain runtime costs against a baseline using representative sizes/boundaries; record conditions and latency, throughput, or memory as relevant. Explain unavailable/unhelpful measurements; complexity analysis is not measured performance.
 - After corrections, rerun affected checks and map satisfied, violated, and unverified criteria to evidence. Report goal/sources, architecture/alternatives, findings, edits/paths, coverage, compatibility, performance, checks, and blockers. Distinguish your edits from prior work; none needed is valid.

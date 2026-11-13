@@ -35,6 +35,7 @@ ticket, brief, detailed request, or existing run. Install `orc` with all five
 | `orc-refine` | Fresh goal/architecture review, corrections, coverage/performance evidence |
 | `orc-deliver` | Approved draft publication, same-PR update, or final promotion |
 | `orc-review` | Fresh PR analysis plus existing feedback and current checks |
+| `browser-check` | Local/deployed browser verification through available Chrome MCP/Chrome DevTools MCP |
 | `onboard` | Source-backed maintainer lesson; optional subsystem focus |
 | `explain` | Concise explanations and handoffs |
 | `git-prune` | Confirmed local branch/worktree cleanup; read-only preview |
@@ -59,10 +60,12 @@ approval covers no later effects unless stated. Handoff means ready for human
 review, not merged.
 
 Before delegation, `orc` checks relevant repository/organization/user skills.
-Alternatives/helpers require approval of exact source, role, use, dependencies,
-and effects; descendants inherit it. Selection waives no verification or delivery
-gate. Generic `explain` handles substantial communication, with a concise
-standalone fallback; simple questions need no extra pass.
+Generic `explain` handles communication; conditional `browser-check` handles local
+and revision-matched deployed checks. Stages retain direct fallbacks. Other skills
+require approval of exact source, role, use, dependencies, and effects; descendants
+inherit it. Selection waives no verification or delivery gate.
+Missing needed browser tooling requires agreed setup, never automatic installation.
+Standalone PR review discovers previews and runs the same checks without `orc`.
 
 The host supplies skills/fresh contexts. Missing capabilities or required
 evidence block affected work. Local checkpoints support resumption, not a

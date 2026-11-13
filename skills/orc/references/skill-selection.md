@@ -22,7 +22,7 @@ ownership grant no invocation authority.
 ## Dispatch and verify
 
 Pass the original role contract, criteria, evidence, grants, and helper/replacement
-identity. Allow only assigned stage/helpers, including established `explain`;
+identity. Allow only assigned stage/helpers, including established `explain` and applicable `browser-check`;
 other stages remain controller-owned. Propagate allowlists, prior declines, and
 ask-before-use through descendants.
 

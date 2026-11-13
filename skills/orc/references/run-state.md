@@ -14,7 +14,7 @@ copied secrets. Durable decisions belong at their source.
 | Requirements | Scope, criterion IDs, sourced clarifications, plan version, unresolved questions |
 | Progress | Stage/status, next action, repair count/limit |
 | Revision | Base/head, local diff and relevant untracked fingerprints, last published head |
-| Evidence/findings | Required/actual checks and reviewers, coverage/revisions, gaps; stable issue IDs, sources, severity, relevance, disposition, repair/verification evidence |
+| Evidence/findings | Required/actual checks and reviewers, coverage/revisions, gaps; browser URL/environment, served revision, deployment, steps/results/artifacts; stable issue IDs, sources, severity, relevance, disposition, repair/verification evidence |
 | Authority | User decision reference, actions/targets, one-time/continuing scope, limits, consumed operations |
 | Skills | Exact default/candidate sources and identities, discovery context, role/helper scope, source versions, approved/declined/pending decisions, worker allowlists |
 | Observation | Owner/transport/handles/scopes, cadence/deadline, fetch/next-check times, per-source received versions and acknowledged cursors, undelivered events/dispositions, unfinished work and resume point |

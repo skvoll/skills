@@ -36,7 +36,7 @@ Instructions do not enforce a sandbox.
 
 ## Complete every change
 
-1. Inspect related skills and callers. Apply transferable lessons at their owner; avoid overlapping workflows or copying local rules everywhere.
+1. Inspect related skills and callers. Apply transferable lessons at their owner; avoid overlapping workflows or copying local rules everywhere. Include browser validation hooks for browser-observable skills.
 2. Map retained requirements, then consolidate before adding rules. Add behavior only for an established need with a useful validation case.
 3. Read back the complete affected instructions. Remove duplication, contradictions, vague wording, unnecessary concepts, and stale placeholders.
 4. Compare word counts with the task's starting state and Git base, including references. Relocation is not a reduction. Justify any net growth by missing required behavior after consolidation; never trade correctness for a word target.

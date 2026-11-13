@@ -1,12 +1,13 @@
 # Observe PR changes
 
-Read for requested monitoring or required pending evidence. `orc`, or the direct
-caller standalone, owns observation/action. Observers collect and return;
+Read for requested monitoring or required pending evidence. `orc`, or the
+standalone review coordinator, owns observation/action. Observers collect and return;
 they never own repairs/publication.
 
 ## Set up
 
-- Use selected scopes. Standalone, offer **Snapshot only (default) / CI / Comments / Both**; silence starts no monitoring. Reuse explicit selections.
+- Include relevant pipeline/deployment readiness for required browser checks. Offer **Snapshot only (default) / CI / Comments / Both** for optional monitoring; silence adds none. Reuse explicit selections.
+- Failed, cancelled, or skipped required readiness is a blocker, not a pending wait.
 - Record owner, target/base/head, scopes/cursors, transport/handles, cadence, and absolute deadline. Use caller limits; otherwise disclose 30-second polling and a ten-minute budget. Deadlines cap waiting, never delay results.
 - Prefer connected events; otherwise take finite snapshots via caller/worker. No reviewer sleep/poll loop or waiting for all CI.
 - Background work needs a real handle and reliable owner delivery; stdout/transcripts/files alone are insufficient. Completion-only workers must finish each snapshot; otherwise use foreground reads.

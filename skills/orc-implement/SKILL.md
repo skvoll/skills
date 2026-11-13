@@ -8,8 +8,8 @@ description: Implement a grounded plan or validated findings, verify observable 
 Use available `explain` for substantial handoffs; otherwise concise, faithful
 English. Ask simple questions directly.
 
-Use caller-approved skills only. Standalone, this stage and generic `explain`
-are implicit. Return additional candidates as `needs_approval` before use,
+Use caller-approved skills only. Standalone, this stage and available `explain`
+and `browser-check` helpers are implicit. Return additional candidates as `needs_approval` before use,
 including through descendants.
 
 ## Establish scope
@@ -26,6 +26,8 @@ including through descendants.
 - Update guidance at its owner. For instructions, inspect affected workflows and consolidate existing rules before adding wording.
 - Test observable behavior through stable interfaces. Establish a regression test's expected failure when useful; do not mirror internals or add runtime tests for low-impact prose.
 - Run required and affected checks; diagnose failures without weakening them. Expand validation only for changed surfaces or unresolved concerns.
+- For browser-observable criteria, use available `browser-check` or Chrome MCP/Chrome DevTools MCP locally. Match the running target to source, including uncommitted changes; record URL/fingerprint, steps/results and relevant diagnostics. Required gaps block readiness; disclose optional gaps.
+- Missing needed browser tools require exact source/version, setup/profile scope and effects from current primary docs. Agree before authorized, supported installation/configuration, then verify callable tools.
 - Apply required versioning once, updating manifest/lockfile together; create no implicit tags or commits.
 - Recheck the full diff against criteria/findings. Remove only task-created accidents and temporary artifacts.
 
