@@ -1,34 +1,30 @@
 ---
 name: orc-plan
-description: Investigate a ticket or description and produce an evidence-backed implementation plan with acceptance criteria, validation, and explicit unresolved decisions. Use standalone or as orc's planning stage.
+description: Investigate a request and return a grounded plan, acceptance criteria, checks, and unresolved decisions. Use standalone or as orc's read-only planning stage.
 ---
 
 # Orc planning
 
-Investigate and plan without implementing. Return to the caller.
-Use available `explain` for the plan and substantial questions; otherwise
-concise, faithful English. Ask simple questions directly.
+Plan without implementing; return to the caller.
+Use available `explain` for substantial handoffs; otherwise concise, faithful
+English. Ask simple questions directly.
 
-In orchestration, obey the supplied skill allowlist and return additional
-candidates as `needs_approval` before invocation, including through descendants.
-Standalone, only this stage and the established `explain` helper are implicit;
-ask before other skills unless explicitly authorized for that use.
+Use caller-approved skills only. Standalone, this stage and generic `explain`
+are implicit. Return additional candidates as `needs_approval` before use,
+including through descendants.
 
 ## Investigate
 
-- Read the full request, accepted clarifications, repository guidance, status, relevant diffs, and existing plan if resuming. Preserve user work and staging.
-- Resolve the target and intended outcome from supplied context and sources. For bugs, gather reproduction or distinguishing evidence; for docs, identify the reader and decision.
-- Trace implementation and verification boundaries. Verify consequential API assumptions against current primary sources and installed versions.
-- Stay read-only: no edits, installs, generation, Git mutations, or state-changing services. Put necessary setup or reproduction mutations in the plan with their required authority.
-- Distinguish user requirements, repository facts, and unresolved choices. Do not fill gaps with vague assumptions. Ask when uncertainty changes scope, behavior, acceptance criteria, or the approach; continue independent investigation.
+- Read the request, accepted clarifications, guidance, status, diffs, and existing plan. Preserve unrelated work and staging.
+- Resolve target and intended outcome from sources. Gather distinguishing evidence for bugs; identify reader and decision for docs.
+- Trace affected callers, consumers, related workflows, and rule owners. Reuse existing contracts; identify transferable changes within scope. Verify consequential API assumptions against primary sources and installed versions.
+- Stay read-only: no edits, installs, generation, Git mutations, or state-changing services. Identify authority needed for setup/reproduction.
+- Separate requirements, facts, and unresolved choices. Ask only when uncertainty changes scope, behavior, criteria, or approach; continue independent investigation.
 
-## Plan and return
+## Return the plan
 
-- State the goal, source-backed findings, ordered steps, affected areas, scope limits, and material tradeoffs. Scale detail to the task.
-- Give observable acceptance criteria stable IDs and pair each with a validation check. Include needed documentation or regression coverage.
-- Identify required local/remote checks from repository configuration and user decisions. Record requested external reviewers and available completion signals; human review is the final handoff unless explicitly required earlier.
-- Identify side effects and any unresolved authorization; planning grants none.
-- Return relevant contextual skill candidates with their source, affected step, and proposed use; keep unapproved choices pending rather than assuming the plan may invoke them.
-- Incorporate accepted answers and update the plan. Return the plan, evidence, criteria/check mapping, and precise unresolved questions.
-- Report `complete` only when the intended outcome and approach are sufficiently grounded to implement. Otherwise return `needs_input`, `needs_approval`, or `blocked`, with the affected work identified.
-- Stop after the plan. The caller owns implementation and any user-requested approval gate; invoking this skill alone does not start coding.
+- State goal, sources, ordered steps, affected areas, scope, and material tradeoffs.
+- Give observable criteria stable IDs and pair each with checks, including regression/docs coverage. Derive required local/remote checks from repository configuration and user decisions; identify external reviewers and completion signals. Future human review is the handoff unless required earlier.
+- Identify effects, missing authority, and contextual skill candidates with exact source and proposed use. Keep unapproved choices pending.
+- Incorporate accepted answers. Return one criterion/check mapping, evidence, and precise questions.
+- Return `complete` when the outcome and approach are grounded; otherwise `needs_input`, `needs_approval`, or `blocked` with the missing evidence/decision. Start no successor or implementation.
