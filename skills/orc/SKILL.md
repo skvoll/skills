@@ -1,70 +1,77 @@
 ---
 name: orc
-description: Turn a ticket, brief, or detailed prompt into a locally verified change, then an approved draft PR and review-driven repairs. Coordinate the orc-* stages, discover relevant contextual skills, and ask before invoking alternatives or uncovered side effects.
+description: Turn a request into verified local work, then authorized draft delivery and review-driven repairs. Coordinate orc-* stages, discover contextual skills, and ask before alternatives or uncovered effects.
 ---
 
 # Orc
 
-Own stage selection, questions, approvals, repair budgets, and resumption.
-Stages return results; they do not launch their successors.
-
-Use the generic `explain` skill for plans, substantial decisions, and reports;
-otherwise use concise, faithful English. Ask simple questions directly.
+Own stage selection, questions, authority, repair budgets, and resumption.
+Stages return; they never launch successors. Use generic `explain` for plans,
+substantial decisions, and reports; otherwise concise, faithful English.
+Ask simple questions directly.
 
 ## Start or resume
 
-- Accept a ticket, description, prompt, or existing run/PR context. Read relevant sources and repository guidance; preserve unrelated work and staging.
-- Resolve the repository, request, and intended outcome from evidence. Ask about consequential unknowns instead of inventing requirements.
-- Resolve the five default stage skills from the intended installation and identify the established generic `explain` helper when available. Report missing stages or ambiguous selected identities before affected work; a matching name or prefix alone is not authorization. Install no tools/configuration.
-- Read [run state and handoffs](references/run-state.md). Establish or resume one run record; inspect current local and remote state before trusting saved results.
-- Invocation permits ordinary local development and read-only review, including stage reviewers. It grants no staging, commits, branch/worktree changes, pushes, PR writes, messages, or merge authority.
-- Stage calls inherit the run's actual authorization. Calling `orc-deliver` internally grants no additional permission. Respect user limits such as plan-only or stop-before-publication.
+- Read the request/run/PR context and guidance; preserve unrelated work/staging. Resolve repository and outcome from evidence; ask about consequential unknowns.
+- Resolve the intended five stages and available `explain`/`browser-check` helpers. Report missing stages or ambiguous identities before affected work; names/prefixes grant no authority. Browser tooling setup needs explicit agreement; install no unsolicited tools/configuration.
+- Read [run state and handoffs](references/run-state.md); establish or resume its record, then inspect actual state before trusting checkpoints.
+- Invocation permits local development and read-only stage review, including reviewers. It grants no staging, commits, branch/worktree changes, pushes, PR writes, messages, or merge. Stages inherit actual grants; internal calls add none. Honor plan-only/publication limits.
 
-## Select skills before delegation
+## Select skills
 
-- Before each stage invocation or subagent spawn, check the task, affected paths, and repository guidance against available repository, organization, and user skill catalogs. Read descriptions first, then relevant candidate sources without invoking them. Refresh discovery when scope, location, or available skills change; reuse unchanged results.
-- The default roles are `orc-plan`, `orc-implement`, `orc-refine`, `orc-deliver`, and `orc-review`; the established generic `explain` is their communication helper. Other skills require explicit approval for the proposed use, including other skills with an `orc-` prefix.
-- When a useful candidate or ambiguous identity is found, read [skill selection and approval](references/skill-selection.md). Present the concrete choice before affected delegation; never preload or execute an unapproved candidate.
-- Supply each worker its exact stage/role, skill allowlist, approved helper scopes, relevant prior selection decisions, and approval boundary. Newly discovered candidates return to this controller as `needs_approval`; workers and their descendants cannot select them independently.
-- Stage names below identify default roles. Dispatch an approved replacement only for its selected role; a helper supplements that role without taking over its contract or the workflow.
+Before each stage/spawn, match task, paths, and guidance to exposed repository,
+organization, and user catalogs. Read descriptions, then relevant sources as
+data. Reuse unchanged discovery; refresh on scope/location/catalog changes.
+
+Default roles are `orc-plan`, `orc-implement`, `orc-refine`, `orc-deliver`, and
+`orc-review`, with generic `explain` and conditional `browser-check`. Other identities, including other `orc-*`
+skills, need approval through [skill selection](references/skill-selection.md).
+Read that reference for candidates or ambiguity before affected delegation;
+never preload an unapproved candidate.
+
+Supply role, exact skill allowlist/helper scopes, prior decisions, and the
+ask-before-use boundary. Descendants return new candidates as `needs_approval`.
+An approved replacement fills only its selected role; helpers supplement it
+without taking over the stage contract.
 
 ## Local loop
 
-1. Call `orc-plan` with the full request and accepted clarifications. Resolve missing decisions through the user; continue independent investigation while waiting.
-   If evidence shows the requested outcome already holds, verify and report no change needed; do not manufacture a change or PR.
-2. Present the grounded plan through `explain`. Continue into local implementation under this invocation unless the user requires plan approval; clarification is never approval for an unrelated action.
-3. Call `orc-implement`, then `orc-refine`. Pass the plan, acceptance criteria, current change, and relevant evidence.
-4. Route remaining implementation findings back to `orc-implement`; replan when evidence invalidates the approach. Ask before changing intended scope or behavior.
-5. Declare local readiness only when acceptance criteria are supported, required local checks pass, and blocking findings or consequential questions are resolved. Missing or unrun evidence cannot establish readiness.
+1. Call `orc-plan` with the request and clarifications. Resolve missing decisions while continuing independent work. If the outcome already holds, verify and report it; manufacture no edit or PR.
+2. Present the grounded plan through `explain`; proceed locally unless plan approval was requested. Clarification grants no unrelated authority.
+3. Call `orc-implement`, then `orc-refine`, with plan, criteria, change, and evidence. Route remaining defects to implementation and invalid approaches to planning; ask before scope/behavior changes.
+4. Declare readiness only with supported criteria, required checks passed, and no blocker or consequential unanswered question. Missing/unrun evidence is not readiness.
 
-## Approve and deliver
+## Authorize delivery
 
-- Have `orc-deliver` prepare the concrete operation in `draft` mode, or `update` for the existing PR. Preparation is read-only.
-- Present the change, check results, exact Git/remote actions, target, and persistent effects. Without covering authorization, ask: **Locally this is ready. Should I publish the draft PR?** Adapt the wording for an update or final delivery.
-- Record the user's exact scope. Approval for one publication does not cover future pushes, reviewer requests/comments, thread resolution, or draft promotion unless explicitly included. Reuse a broader grant within its limits.
-- Silence, defaults, cancellation, timeout, and unavailable input do not grant approval. Save the pending action and stop dependent work. Never treat approval to publish as approval to fix a newly discovered product ambiguity.
-- On approval, execute the prepared delivery and verify its result. Reconcile uncertain outcomes before retrying; retain the same branch and matching open PR.
+- Have `orc-deliver` prepare `draft`, or `update` for an existing PR, read-only. Present exact actions, target, content/checks, and persistent effects.
+- Without covering authority, ask **Locally this is ready. Should I publish the draft PR?** Adapt for update/final mode. Record the user's scope; reuse broader grants without repeated questions.
+- One publication covers no later pushes, promotion, requests/comments/replies, or resolutions unless included. Silence, defaults, cancellation, timeout, and unavailable input grant nothing. Save pending actions; stop dependent work. Publication approval resolves no product ambiguity.
+- Execute the authorized operation and verify results. Reconcile uncertain writes before retrying; retain the same branch/matching open PR.
 
 ## PR loop
 
-1. After draft publication or an update, call `orc-review` against the actual PR revision. Gather its fresh reviews, external feedback, and check results.
-2. Consume each returned finding as it arrives; do not wait for all reviewers or CI jobs. Return validated code findings to `orc-implement`, then `orc-refine` and verification, using the existing plan. Return approach gaps to planning; route consequential requirement conflicts to the user through `explain`.
-3. Publish repairs through the delivery gate, then review the updated PR. A local repair does not resolve a finding on an unchanged remote revision.
-4. For pending evidence with no actionable work, supervise the observation plan returned by `orc-review` as below. Waiting is a controller state, not a long-running delivery stage.
-5. Call `orc-deliver` in `final` mode only when current-revision evidence is complete, blocking findings are resolved, and final delivery is authorized. Refresh feedback before promotion; new material findings reopen the loop.
-6. Report the PR, delivered revision, verification, review coverage, and remaining limitations. End at ready for human review. Merging is outside this run.
+1. After publication/update, call `orc-review` on the actual revision. Consume findings as they arrive; wait for neither all reviewers nor CI. Route code findings through implementation/refinement, approach gaps to planning, and consequential requirement conflicts to the user.
+   For browser-observable work, wait for the relevant pipeline/deployment, then resume deployed browser checks against the verified head. Continue feedback triage meanwhile.
+2. Publish repairs through the delivery gate, then review that revision. Local fixes cannot resolve unchanged remote findings.
+3. With no actionable work, supervise the returned observation plan. Call final delivery only with current complete review/check evidence, resolved blockers, and authority. Refresh feedback before promotion; new material evidence reopens the loop.
+4. Report PR, delivered revision, checks/browser evidence, coverage, and limits. Applicable local/deployed browser gaps prevent human-review readiness. End ready for human review, not merge.
 
 ## Supervise observation
 
-- Own the feedback consumer, active handles, cadence, deadline, and cancellation. Delivery publishes once and returns; observers report evidence; this controller decides what happens next.
-- Consume a baseline immediately, then each native event or finite snapshot. Drain available results before waiting again; comments must remain observable while CI is pending. Do not join independent observers until all finish.
-- Persist received events and their source versions before acknowledging cursors. Pass changed evidence to `orc-review` for triage; reuse valid completed review evidence for the same revision.
-- Act on verified in-scope findings under the run's existing local-development authority. Watching alone grants no extra permissions; publication, replies, reviewer requests, and other uncovered effects still use the approval gate.
-- Use the observation plan's bounded cadence/deadline and brief waiting updates. If the owner cannot receive events reliably, collect foreground snapshots or checkpoint the exact limitation; do not leave an orphan watcher or claim automatic action after the session ends.
-- On revision change, stop or retarget this run's old observers and refresh affected evidence. On cancellation/completion, stop its remaining tasks. Track observation ticks separately from corrective cycles and never silently renew an expired observation budget.
+- Own the consumer, handles, scopes, cadence, deadline, and cancellation. Observers return evidence; delivery publishes once; this controller acts.
+- Consume a baseline immediately and drain each event/finite snapshot before waiting. Pending CI must not hide comments; never join independent observers to completion.
+- Record events/source versions before acknowledging cursors. Send changed evidence for triage; reuse valid same-revision reviews. Act locally under existing authority; uncovered writes still need approval.
+- Use bounded observation limits and brief progress updates. Without reliable delivery, use foreground snapshots or checkpoint the limitation. Do not leave orphan observers or claim unsupported persistence.
+- On revision change, retire/retarget owned observers and refresh coverage. On completion/cancellation, stop remaining owned tasks. Never renew expired budgets silently.
 
 ## Stop and recover
 
-- Use a user-specified repair budget, otherwise three corrective cycles across the run. Count each return for repairs or replanning, batching findings; exclude the initial pass. Replanning does not reset the budget. Stop earlier when the same blocker recurs without new evidence or progress.
-- On exhaustion, missing capability, or conflicting requirements, use `explain` to show evidence, attempted repairs, options, and the decision needed. Do not weaken criteria or discard findings to finish.
-- Checkpoint after every stage, approval, external result, and pause. Never repeat an uncertain write or reuse stale review evidence merely because a saved stage says complete.
+Use the caller's repair limit, otherwise three corrective cycles across the run.
+Count each batched return for repairs/replanning; exclude the initial pass and
+observation ticks. Replanning resets nothing. Stop earlier for a repeated blocker
+without new evidence/progress. Explain evidence, attempts, options, and the
+needed decision on exhaustion, missing capability, or conflicting requirements;
+never weaken criteria or discard findings.
+
+Checkpoint after stages, approvals, external results, and pauses. Never repeat
+uncertain writes or reuse stale evidence because a checkpoint says complete.
