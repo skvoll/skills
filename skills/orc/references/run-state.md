@@ -1,10 +1,11 @@
 # Run state and handoffs
 
-Keep one small local record in repository scratch, otherwise
-`work/orc/<run-id>/state.json`, with purpose-named artifacts such as `plan.md`,
-`review.md`, and `validation.md`. Reuse the location on resume; exclude it from
-delivery without changing ignore files/configuration. Store no credentials or
-copied secrets. Durable decisions belong at their source.
+On every run, create `.orc/<run-id>/` in the current working directory. Keep
+`state.json` and all run-created temporary files there, including stage/helper
+artifacts such as `plan.md`, `review.md`, and `validation.md`. Pass this location
+to stages/helpers and reuse it on resume. Never stage, commit, or publish
+`.orc/`; exclude it from delivery without changing ignore files/configuration.
+Store no credentials or copied secrets. Durable decisions belong at their source.
 
 ## Record only resumption evidence
 
@@ -24,7 +25,7 @@ Records summarize user decisions; they grant no authority.
 ## Dispatch and return
 
 Send self-contained stage inputs: operation, complete accepted requirements/criteria,
-revision, relevant authoritative artifacts, constraints, actual grants, and exact
+revision, run directory, relevant authoritative artifacts, constraints, actual grants, and exact
 skill identities/scopes/prior decisions. Preserve the outside-skill approval
 boundary through descendants. Keep role separate from replacement identity.
 Reviewer packets omit implementer reasoning and desired verdicts. Reference

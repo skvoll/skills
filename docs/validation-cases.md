@@ -14,6 +14,7 @@ outcomes, not executed agent tests.
 | Pact / conflicting customization, equivalent unmanaged rules, duplicate/incomplete markers | Report before editing; infer no block boundary. |
 | Orc / ticket, brief, or detailed prompt | Plan, implement, refine locally; no extra task stage or plan-approval pause unless requested. |
 | Orc / outcome already satisfied | Verify it; create no edit, commit, or PR. |
+| Orc / new run, delegated temporary work, resume, or delivery | Create `.orc/<run-id>/` under the starting working directory; keep state and temporary stage/helper artifacts there, reuse it on resume, and never stage, commit, or publish `.orc/`. |
 | Orc / consequential unknown or requirement conflict | Investigate facts, ask a precise question, pause dependent work, and continue independent checks. |
 | Orc / simple question or plan-only request | Ask directly without recursive presentation; obey plan-only/approval limits. |
 | Orc / missing stage or fresh capability | Report before affected work; neither invent independence nor install adapters. |
