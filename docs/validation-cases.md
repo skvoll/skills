@@ -14,7 +14,9 @@ outcomes, not executed agent tests.
 | Pact / conflicting customization, equivalent unmanaged rules, duplicate/incomplete markers | Report before editing; infer no block boundary. |
 | Orc / ticket, brief, or detailed prompt | Plan, implement, refine locally; no extra task stage or plan-approval pause unless requested. |
 | Orc / outcome already satisfied | Verify it; create no edit, commit, or PR. |
-| Orc / new run, delegated temporary work, resume, or delivery | Create `.orc/<run-id>/` under the starting working directory; keep state and temporary stage/helper artifacts there, reuse it on resume, and never stage, commit, or publish `.orc/`. |
+| Orc / task with no local scratch files or persisted checkpoint | Keep state in memory and create no directory. Allocate one only if an expected local write emerges, including delegated work. |
+| Orc / local scratch files or persisted checkpoint expected | Allocate a unique directory outside the checkout, pass its absolute path to stages/helpers, and keep Git status and delivery free of scratch files. Use an ignored, untracked path if a tool requires checkout-local scratch files. |
+| Orc / pause, resume, or completion | Report the path on pause, reuse it on resume, and clean up when resumption is no longer pending. Reconstruct missing checkpoints from actual state. Use private cache storage when the run must outlast OS temporary storage. |
 | Orc / consequential unknown or requirement conflict | Investigate facts, ask a precise question, pause dependent work, and continue independent checks. |
 | Orc / simple question or plan-only request | Ask directly without recursive presentation; obey plan-only/approval limits. |
 | Orc / missing stage or fresh capability | Report before affected work; neither invent independence nor install adapters. |

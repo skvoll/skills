@@ -1,10 +1,19 @@
 # Run state and handoffs
 
-On every run, create `.orc/<run-id>/` in the current working directory. Keep
-`state.json` and all run-created temporary files there, including stage/helper
-artifacts such as `plan.md`, `review.md`, and `validation.md`. Pass this location
-to stages/helpers and reuse it on resume. Never stage, commit, or publish
-`.orc/`; exclude it from delivery without changing ignore files/configuration.
+Keep run state in memory unless the task needs local scratch files or a persisted
+checkpoint. Create the directory only when such a write is expected, including
+work delegated to a stage or helper. Use `mktemp -d "${TMPDIR:-/tmp}/orc.XXXXXXXX"`
+with an absolute parent outside the checkout. Try `/tmp` if `TMPDIR` is
+unsuitable. Report failure if neither works. Keep `state.json` and scratch files
+there when needed. On pause, report any allocated path. Reuse it on resume and remove the
+owned directory when no resumption remains pending. If a run must outlast OS
+temporary storage, use a private per-run directory in the user's cache outside
+the checkout.
+
+If a tool requires scratch files inside the checkout, use a dedicated path and
+verify it is ignored and untracked before writing. With authority, add a local
+rule to the exclude file resolved by `git rev-parse --git-path info/exclude`
+if needed. Never stage, commit, or publish scratch files.
 Store no credentials or copied secrets. Durable decisions belong at their source.
 
 ## Record only resumption evidence
@@ -25,8 +34,9 @@ Records summarize user decisions; they grant no authority.
 ## Dispatch and return
 
 Send self-contained stage inputs: operation, complete accepted requirements/criteria,
-revision, run directory, relevant authoritative artifacts, constraints, actual grants, and exact
-skill identities/scopes/prior decisions. Preserve the outside-skill approval
+revision, absolute run directory if allocated, relevant authoritative artifacts,
+constraints, actual grants, and exact skill identities/scopes/prior decisions.
+Preserve the outside-skill approval
 boundary through descendants. Keep role separate from replacement identity.
 Reviewer packets omit implementer reasoning and desired verdicts. Reference
 accessible artifacts instead of replaying history; omit no decisive requirement.

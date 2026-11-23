@@ -14,7 +14,7 @@ Ask simple questions directly.
 
 - Read the request/run/PR context and guidance; preserve unrelated work/staging. Resolve repository and outcome from evidence; ask about consequential unknowns.
 - Resolve the intended five stages and available `explain`/`browser-check` helpers. Report missing stages or ambiguous identities before affected work; names/prefixes grant no authority. Browser tooling setup needs explicit agreement; install no unsolicited tools/configuration.
-- Read [run state and handoffs](references/run-state.md); establish or resume its record, then inspect actual state before trusting checkpoints.
+- Read [run state and handoffs](references/run-state.md). On resume, inspect actual state before trusting checkpoints.
 - Invocation permits local development and read-only stage review, including reviewers. It grants no staging, commits, branch/worktree changes, pushes, PR writes, messages, or merge. Stages inherit actual grants; internal calls add none. Honor plan-only/publication limits.
 
 ## Select skills
@@ -73,5 +73,5 @@ without new evidence/progress. Explain evidence, attempts, options, and the
 needed decision on exhaustion, missing capability, or conflicting requirements;
 never weaken criteria or discard findings.
 
-Checkpoint after stages, approvals, external results, and pauses. Never repeat
-uncertain writes or reuse stale evidence because a checkpoint says complete.
+Update run state after stages, approvals, external results, and pauses. Never
+repeat uncertain writes or reuse stale evidence because a checkpoint says complete.
