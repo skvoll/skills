@@ -1,10 +1,18 @@
 # Run state and handoffs
 
-On every run, create `.orc/<run-id>/` in the current working directory. Keep
-`state.json` and all run-created temporary files there, including stage/helper
-artifacts such as `plan.md`, `review.md`, and `validation.md`. Pass this location
-to stages/helpers and reuse it on resume. Never stage, commit, or publish
-`.orc/`; exclude it from delivery without changing ignore files/configuration.
+For a new run, use `mktemp -d "${TMPDIR:-/tmp}/orc.XXXXXXXX"` with an absolute
+temporary parent outside the checkout. If `TMPDIR` is unsuitable, try `/tmp`;
+report failure if no suitable directory is available. Keep `state.json` and
+temporary stage/helper artifacts there. Pass the absolute path to stages/helpers.
+On pause, report the path for resumption. Reuse it on resume and remove the
+owned directory when no resumption remains pending. If a run must outlast OS
+temporary storage, use a private per-run directory in the user's cache outside
+the checkout.
+
+If a tool requires scratch files inside the checkout, use a dedicated path and
+verify it is ignored and untracked before writing. With authority, add a local
+rule to the exclude file resolved by `git rev-parse --git-path info/exclude`
+if needed. Never stage, commit, or publish scratch files.
 Store no credentials or copied secrets. Durable decisions belong at their source.
 
 ## Record only resumption evidence
