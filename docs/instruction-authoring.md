@@ -16,7 +16,7 @@ Apply to every skill addition or edit, including follow-up corrections.
 | Entry and checks | `AGENTS.md` |
 | Collaboration | `docs/working-agreement.md` |
 | Authoring | This file |
-| Shared permissions/design | `skills/pact/assets/rules.md` |
+| Permissions and design | In the skill where the action or decision occurs |
 | Procedure | `skills/<name>/SKILL.md` |
 | Substantial conditional detail | That skill's `references/` |
 | Presentation | `skills/explain/SKILL.md` |

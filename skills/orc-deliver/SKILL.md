@@ -21,11 +21,11 @@ including through descendants.
 | `final` | Finalize description; mark reviewed draft ready for human review |
 
 Mode selection/invocation, including internal calls, permits read-only
-preparation. Before uncovered writes, present exact actions, target, content,
+preparation. Before uncovered writes, present exact actions, target, purpose, content,
 checks, and persistent effects. Return `needs_approval` to the orchestrator or
 ask standalone; execute once authorized. Reuse grants within scope; one draft
 approval covers no later pushes, promotion, requests, comments/replies, or
-resolutions unless stated. Silence and tool access grant nothing.
+resolutions unless stated. Silence, tool access, and documented commands grant nothing.
 
 History rewriting requires the exact plan's approval; published history also
 needs guarded force-push authority. Other messages, settings, secrets, releases,

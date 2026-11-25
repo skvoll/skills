@@ -32,8 +32,8 @@ including through descendants.
 ### Reviewer
 
 - Independently inspect assigned diff and surrounding source. The general reviewer owns whole-PR criteria and cross-packet integration.
-- Assess correctness, regressions, error/boundary paths, design, security, accessibility, performance, compatibility, and test coverage. Verify consequential API assumptions; cite concrete evidence.
-- Distinguish defects, concerns, and suggestions. Run only permitted checks that mutate neither Git, remote/shared data, nor reviewed code; disclose missing checks.
+- Assess correctness, regressions, error/boundary paths, design, security, accessibility, performance, compatibility, and test coverage. For design, trace responsibility, state, and dependency boundaries; tie added complexity to a concrete need. Verify consequential API assumptions; cite concrete evidence.
+- Distinguish defects, concerns, and suggestions. Inspect check commands and hooks before execution; run only permitted checks that mutate neither Git, remote/shared data, nor reviewed code. Disclose missing checks.
 - Exercise browser-observable criteria with available `browser-check` or Chrome MCP/Chrome DevTools MCP on ready, revision-verified targets; record URL/revision, steps/results and relevant diagnostics. Return pending deployment/setup needs promptly to the coordinator; required gaps block completion, optional gaps remain disclosed.
 - Return findings, actual coverage, and questions through the coordinator. Make no corrections, posts/replies, or successor calls.
 
