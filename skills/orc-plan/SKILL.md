@@ -18,12 +18,13 @@ including through descendants.
 - Read the request, accepted clarifications, guidance, status, diffs, and existing plan. Preserve unrelated work and staging.
 - Resolve target and intended outcome from sources. Gather distinguishing evidence for bugs; identify reader and decision for docs.
 - Trace affected callers, consumers, related workflows, and rule owners. Reuse existing contracts; identify transferable changes within scope. Verify consequential API assumptions against primary sources and installed versions.
-- Stay read-only: no edits, installs, generation, Git mutations, or state-changing services. Identify authority needed for setup/reproduction.
+- Choose the simplest design that meets current needs and respects existing decisions. Explain material tradeoffs and revisit assumptions when evidence changes.
+- Stay read-only: no edits, installs, generation, Git mutations, or state-changing services. Inspect proposed commands for local and remote effects; identify authority needed for setup/reproduction.
 - Separate requirements, facts, and unresolved choices. Ask only when uncertainty changes scope, behavior, criteria, or approach; continue independent investigation.
 
 ## Return the plan
 
-- State goal, sources, ordered steps, affected areas, scope, and material tradeoffs.
+- State goal, sources, ordered steps, affected areas, scope, and design rationale.
 - Give observable criteria stable IDs and pair each with checks, including regression/docs coverage. Derive required local/remote checks from repository configuration and user decisions; identify external reviewers and completion signals. Future human review is the handoff unless required earlier.
 - Plan applicable local/preview Chrome MCP/Chrome DevTools MCP checks with available `browser-check`; include criteria, source/served revision evidence, and setup gaps. Missing tools need exact source/version, setup/profile scope and effects from current primary docs for agreement, authorized setup and callable verification. Planning remains read-only.
 - Identify effects, missing authority, and contextual skill candidates with exact source and proposed use. Keep unapproved choices pending.

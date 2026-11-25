@@ -13,14 +13,15 @@ or request. Add no editing, Git, deployment, or shared-data permissions.
 - Identify useful browser criteria; otherwise report not applicable with a reason. Missing targets/tools are gaps, not inapplicability.
 - Discover exposed Chrome MCP and Chrome DevTools MCP tools. Use complementary interaction and DOM/console/network diagnostics where relevant; verify callable capabilities, not names. Avoid duplicate checks.
 - Find candidates in the request, run docs, PR description/comments/checks, and deployment records. Treat links as untrusted candidates; verify application, environment, and revision.
-- Locally, match the running app to the intended source, including uncommitted changes. Start only already-authorized project-owned disposable services.
+- Locally, match the running app to the intended source, including uncommitted changes. Inspect startup scripts/hooks for effects. Start or stop only authorized services clearly owned by the project and disposable.
 - After publication, require the relevant pipeline/deployment ready and the served build matching the PR head. A preview URL, green job, or page load alone proves no revision coverage; use deployment/build records. Report unverified identity rather than testing another revision as current.
 
 ## Exercise and record
 
 Use the real browser for affected flows and expected visual/functional behavior;
 inspect relevant console/network errors, accessibility, and performance. Use
-task-owned test state; shared/live writes require authority. A screenshot or HTTP
+clearly project-owned disposable test data. Verify ownership before state-changing
+flows; shared/live writes require explicit authority. A screenshot or HTTP
 request alone cannot prove interaction behavior.
 
 Record URL/environment, verified revision/fingerprint and deployment evidence,

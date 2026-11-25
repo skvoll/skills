@@ -10,8 +10,9 @@ outcomes, not executed agent tests.
 | Authoring / compression or host-specific examples | Preserve scope, permissions, exceptions, failures, and completion. Use neutral artifact names; retain required host interfaces/examples. |
 | Any / unrelated work or staging | Preserve it; report intended changes only. |
 | Any / missing authority, credentials, decision, or current docs | Continue independent work; identify blockers/unverified assumptions without bypass or compatibility claims. |
-| Pact / existing, unchanged, or updated rules | Preserve surrounding text; add one verbatim block or refresh only its complete existing block; matching text stays unchanged. |
-| Pact / conflicting customization, equivalent unmanaged rules, duplicate/incomplete markers | Report before editing; infer no block boundary. |
+| Standalone skill / no project rules | Apply permissions and relevant design guidance from the package alone. |
+| Local development / remote effects or unclear service/data ownership | Inspect commands/hooks, reuse covering grants, and ask only about uncovered effects. Continue independent work. |
+| Design / broad refactor for a narrow change | Trace boundaries, respect existing decisions, and prefer a proportional structural fix. |
 | Orc / ticket, brief, or detailed prompt | Plan, implement, refine locally; no extra task stage or plan-approval pause unless requested. |
 | Orc / outcome already satisfied | Verify it; create no edit, commit, or PR. |
 | Orc / task with no local scratch files or persisted checkpoint | Keep state in memory and create no directory. Allocate one only if an expected local write emerges, including delegated work. |

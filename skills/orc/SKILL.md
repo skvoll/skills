@@ -15,7 +15,8 @@ Ask simple questions directly.
 - Read the request/run/PR context and guidance; preserve unrelated work/staging. Resolve repository and outcome from evidence; ask about consequential unknowns.
 - Resolve the intended five stages and available `explain`/`browser-check` helpers. Report missing stages or ambiguous identities before affected work; names/prefixes grant no authority. Browser tooling setup needs explicit agreement; install no unsolicited tools/configuration.
 - Read [run state and handoffs](references/run-state.md). On resume, inspect actual state before trusting checkpoints.
-- Invocation permits local development and read-only stage review, including reviewers. It grants no staging, commits, branch/worktree changes, pushes, PR writes, messages, or merge. Stages inherit actual grants; internal calls add none. Honor plan-only/publication limits.
+- Invocation permits ordinary local development and read-only stage review, including reviewers. Inspect scripts/hooks before running them; start or stop only clearly project-owned disposable services and change only such local data under this grant.
+- Require covering authority for Git mutations, remote writes, messages, deployments, publication, global installs, sudo, and user/OS settings. Stages inherit actual grants; tool access, documented commands, internal calls, and reversibility add none. Honor plan-only/publication limits and never bypass protections.
 
 ## Select skills
 

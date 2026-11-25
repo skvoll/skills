@@ -28,7 +28,6 @@ ticket, brief, detailed request, or existing run. Install `orc` with all five
 
 | Skill | Outcome |
 | --- | --- |
-| `pact` | Shared rules embedded in project instructions |
 | `orc` | Coordinates development, authorized delivery, review, and repairs |
 | `orc-plan` | Grounded plan, criteria/checks, unresolved decisions |
 | `orc-implement` | Verified local implementation or repair |
@@ -79,17 +78,20 @@ repairs/publication remain controller-owned.
 
 Manage installations with `npx skills list`, `npx skills update`, and `npx skills remove <name>`;
 add `--global` for that scope. `orc` replaces `orchestrate`; `orc-*` replaces
-`orch-*`, and former `task`, `refine`, and `deliver` names are retired. Updating
+`orch-*`. The `pact`, `task`, `refine`, and `deliver` skills are retired. Updating
 source removes no legacy installation: inspect and remove only confirmed old
 `skvoll/skills` copies before reinstalling.
+
+Active skills carry their own rules. Existing Pact blocks in `AGENTS.md` still
+apply. Before removing one, check where else it applies and preserve project-specific
+instructions.
 
 ## Develop
 
 Read [AGENTS.md](AGENTS.md). Every skill addition/change must pass the
 [authoring process](docs/instruction-authoring.md), including full readback,
 deduplication, context counts, and validation. Each `skills/<name>` installs
-independently; root/docs guidance does not install. [Pact's source](skills/pact/assets/rules.md)
-updates embedded rules only after updating the installation and rerunning pact.
+independently. Keep needed rules in the skill package so they apply when it runs.
 
 ## License
 
